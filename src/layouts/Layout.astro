@@ -1,0 +1,42 @@
+---
+import '@fontsource/orbitron/400.css';
+import '@fontsource/orbitron/500.css';
+import '@fontsource/orbitron/600.css';
+import '@fontsource/orbitron/700.css';
+import '@fontsource/inter/300.css';
+import '@fontsource/inter/400.css';
+import '@fontsource/inter/500.css';
+import '@fontsource/inter/600.css';
+import '@fontsource/inter/700.css';
+import '../styles/global.css';
+import BaseHead from '../components/BaseHead.astro';
+import Analytics from '../components/Analytics.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  ogImage?: string;
+  canonicalURL?: string;
+}
+const { title, description, ogImage, canonicalURL } = Astro.props;
+---
+<!doctype html>
+<html lang="fr">
+  <head>
+    <BaseHead
+      title={title}
+      description={description}
+      ogImage={ogImage}
+      canonicalURL={canonicalURL}
+    />
+    <meta name="generator" content={Astro.generator} />
+  </head>
+  <body class="text-gray-100">
+    <canvas id="network-canvas"></canvas>
+    <slot />
+    <script>
+      import '../scripts/particles';
+    </script>
+    <Analytics />
+  </body>
+</html>

@@ -1,0 +1,51 @@
+---
+---
+<aside id="sidebar" class="fixed left-0 top-0 h-screen w-64 z-50 transform transition-transform duration-300 -translate-x-full lg:translate-x-0 flex flex-col">
+  <div class="flex flex-col items-center py-8">
+    <div class="w-24 h-24 rounded-full border-2 border-cyan-500/50 overflow-hidden mb-3">
+      <picture>
+        <source srcset={`${import.meta.env.BASE_URL}images/avatar-full.webp`} type="image/webp" />
+        <img src={`${import.meta.env.BASE_URL}images/avatar.jpg`} alt="Photo de profil de Jonathan Aerts" class="w-full h-full object-cover" width="96" height="96" />
+      </picture>
+    </div>
+    <h2 class="font-[Orbitron] text-cyan-400 text-sm font-bold">Jonathan Aerts</h2>
+    <p class="text-xs text-gray-400">Cloud Solutions Architect</p>
+  </div>
+
+  <nav class="px-4 space-y-1 overflow-y-auto flex-1">
+    <a href="#hero" class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm text-gray-300 hover:text-cyan-400 hover:bg-cyan-500/5 transition-all">🏠 <span data-i18n="nav_home">Accueil</span></a>
+    <a href="#highlights" class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm text-gray-300 hover:text-cyan-400 hover:bg-cyan-500/5 transition-all">⭐ <span data-i18n="nav_highlights">Points Forts</span></a>
+    <a href="#skills" class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm text-gray-300 hover:text-cyan-400 hover:bg-cyan-500/5 transition-all">💻 <span data-i18n="nav_skills">Compétences</span></a>
+    <a href="#experience" class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm text-gray-300 hover:text-cyan-400 hover:bg-cyan-500/5 transition-all">💼 <span data-i18n="nav_experience">Expérience</span></a>
+    <a href="#tools" class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm text-gray-300 hover:text-cyan-400 hover:bg-cyan-500/5 transition-all">🔧 <span data-i18n="nav_stack">Stack</span></a>
+    <a href="#projects" class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm text-gray-300 hover:text-cyan-400 hover:bg-cyan-500/5 transition-all">🚀 <span data-i18n="nav_projects">Projets</span></a>
+    <a href="#education" class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm text-gray-300 hover:text-cyan-400 hover:bg-cyan-500/5 transition-all">🎓 <span data-i18n="nav_education">Formation</span></a>
+    <a href="#about" class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm text-gray-300 hover:text-cyan-400 hover:bg-cyan-500/5 transition-all">😎 <span data-i18n="nav_about">À Propos</span></a>
+    <a href="#contact" class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm text-gray-300 hover:text-cyan-400 hover:bg-cyan-500/5 transition-all">📧 <span data-i18n="nav_contact">Contact</span></a>
+  </nav>
+
+  <div class="px-4 mt-4 pb-2">
+    <p class="text-xs text-gray-500 text-center mb-2 font-[Orbitron]">LANGUAGE</p>
+    <div class="flex gap-2 justify-center" role="group" aria-label="Change language">
+      <button id="btn-fr" class="lang-btn" data-lang="fr" aria-label="Français" aria-pressed="true">🇫🇷 FR</button>
+      <button id="btn-en" class="lang-btn" data-lang="en" aria-label="English" aria-pressed="false">🇬🇧 EN</button>
+      <button id="btn-jp" class="lang-btn" data-lang="jp" aria-label="日本語" aria-pressed="false">🇯🇵 JP</button>
+    </div>
+  </div>
+
+  <div class="pb-6 flex justify-center gap-3">
+    <a href="https://linkedin.com/in/jaerts085/" target="_blank" rel="noopener noreferrer" class="social-icon">in</a>
+    <a href="https://github.com/John6810" target="_blank" rel="noopener noreferrer" class="social-icon">gh</a>
+    <a data-email class="social-icon">@</a>
+  </div>
+</aside>
+
+<button id="menuBtn" class="lg:hidden fixed top-4 left-4 z-[60] p-2 bg-[#0d1320] border border-cyan-500/20 rounded-lg text-cyan-400">☰</button>
+
+<script>
+  import '../scripts/i18n';
+
+  document.getElementById('menuBtn')?.addEventListener('click', () => {
+    document.getElementById('sidebar')?.classList.toggle('-translate-x-full');
+  });
+</script>

@@ -1,0 +1,33 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Sidebar from '../components/Sidebar.astro';
+import HeroSection from '../components/HeroSection.astro';
+import HighlightsSection from '../components/HighlightsSection.astro';
+import SkillsSection from '../components/SkillsSection.astro';
+import ExperienceSection from '../components/ExperienceSection.astro';
+import StackSection from '../components/StackSection.astro';
+import ProjectsSection from '../components/ProjectsSection.astro';
+import EducationSection from '../components/EducationSection.astro';
+import AboutSection from '../components/AboutSection.astro';
+import ContactSection from '../components/ContactSection.astro';
+---
+<Layout
+  title="Jonathan Aerts — Cloud Solutions Architect | Azure Landing Zone | Terraform | Belgium"
+  description="Cloud Solutions Architect 15+ ans IT. Azure Landing Zones from scratch, Terraform/Terragrunt IaC, multi-region governance. Belgium/Luxembourg. Open to Cloud Architect roles at hyperscalers."
+  canonicalURL="https://jonathan-aerts.dev/full"
+>
+  <Sidebar />
+  <main class="lg:ml-64 relative z-10">
+    <HeroSection />
+    <HighlightsSection />
+    <SkillsSection />
+    <ExperienceSection />
+    <StackSection />
+    <ProjectsSection />
+    <EducationSection />
+    <AboutSection />
+    <footer>
+      <ContactSection />
+    </footer>
+  </main>
+</Layout>

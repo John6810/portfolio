@@ -1,0 +1,202 @@
+---
+---
+<section id="projects" class="py-20 relative">
+  <div class="container mx-auto px-6">
+    <h2 class="section-title" data-i18n="section_projects">Projets & Homelab</h2>
+    <p class="text-gray-400 mb-8" data-i18n="projects_intro">Au-delà du boulot — ce que je construis par passion.</p>
+
+    <!-- Infrastructure -->
+    <h3 class="font-[Orbitron] text-cyan-400 text-sm mb-4 uppercase tracking-widest" data-i18n="proj_infra_title">Infrastructure & GitOps</h3>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+
+      <div class="card">
+        <div class="flex items-center gap-3 mb-3">
+          <span class="text-2xl">⚙️</span>
+          <h3 class="font-[Orbitron] text-cyan-400 text-sm" data-i18n="proj1_title">Homelab Kubernetes</h3>
+        </div>
+        <p class="text-gray-400 text-sm mb-4" data-i18n="proj1_desc">Cluster bare-metal 2 nodes kame01/kame02 (Canonical k8s v1.32), GitOps via ArgoCD ApplicationSet, Prometheus/Grafana, Traefik, MetalLB, stockage hybride SMB/RawFile CSI. 20 applications en production.</p>
+        <div class="flex flex-wrap gap-2">
+          <span class="tag">Kubernetes</span><span class="tag">ArgoCD</span><span class="tag">GitOps</span>
+          <span class="tag">Traefik</span><span class="tag">MetalLB</span><span class="tag">Prometheus</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="flex items-center gap-3 mb-3">
+          <span class="text-2xl">🌐</span>
+          <h3 class="font-[Orbitron] text-cyan-400 text-sm" data-i18n="proj2_title">Ce site — jonathan-aerts.dev</h3>
+        </div>
+        <p class="text-gray-400 text-sm mb-4" data-i18n="proj2_desc">Portfolio Astro + Tailwind CSS v4, déployé sur GitHub Pages. CI/CD via GitHub Actions.</p>
+        <div class="flex flex-wrap gap-2">
+          <span class="tag">Astro</span><span class="tag">Tailwind CSS</span>
+          <span class="tag">GitHub Actions</span><span class="tag">GitHub Pages</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="flex items-center gap-3 mb-3">
+          <span class="text-2xl">🏗️</span>
+          <h3 class="font-[Orbitron] text-cyan-400 text-sm" data-i18n="proj3_title">Terraform Modules — Azure</h3>
+        </div>
+        <p class="text-gray-400 text-sm mb-4" data-i18n="proj3_desc">Modules production-grade — ResourceGroup, VNet, Subnet, NSG, RouteTable, VNet Peering, ASG. Documentation complète, telemetry, diagnostic settings.</p>
+        <div class="flex flex-wrap gap-2">
+          <span class="tag">Terraform</span><span class="tag">Azure</span>
+          <span class="tag">IaC</span><span class="tag">Modules</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Scripts & Automatisations perso -->
+    <h3 class="font-[Orbitron] text-cyan-400 text-sm mb-4 uppercase tracking-widest" data-i18n="proj_scripts_title">Scripts & Automatisations personnelles</h3>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+
+      <div class="card">
+        <div class="flex items-center gap-3 mb-3">
+          <span class="text-2xl">🚗</span>
+          <h3 class="font-[Orbitron] text-cyan-400 text-sm">AudiConnect</h3>
+        </div>
+        <p class="text-gray-400 text-sm mb-4" data-i18n="proj_audi_desc">Client Python pour l'API Audi Connect — récupération statut véhicule, autonomie, état de charge. Intégration Home Assistant via sensor personnalisé.</p>
+        <div class="flex flex-wrap gap-2">
+          <span class="tag">Python</span><span class="tag">API</span><span class="tag">Home Assistant</span><span class="tag">Audi Q4 e-tron</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="flex items-center gap-3 mb-3">
+          <span class="text-2xl">⚡</span>
+          <h3 class="font-[Orbitron] text-cyan-400 text-sm">NRGkick</h3>
+        </div>
+        <p class="text-gray-400 text-sm mb-4" data-i18n="proj_nrgkick_desc">Script Python pour piloter la borne de recharge NRGkick — contrôle du courant, monitoring de session, automatisation de la recharge.</p>
+        <div class="flex flex-wrap gap-2">
+          <span class="tag">Python</span><span class="tag">EV Charging</span><span class="tag">API</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="flex items-center gap-3 mb-3">
+          <span class="text-2xl">🏋️</span>
+          <h3 class="font-[Orbitron] text-cyan-400 text-sm">Resawod</h3>
+        </div>
+        <p class="text-gray-400 text-sm mb-4" data-i18n="proj_resawod_desc">Client Python reverse-engineered de l'API Resawod/Nubapp — consultation planning CrossFit, réservation et annulation de créneaux en CLI. API déployée en K8s.</p>
+        <div class="flex flex-wrap gap-2">
+          <span class="tag">Python</span><span class="tag">Reverse Engineering</span><span class="tag">CLI</span><span class="tag">K8s</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="flex items-center gap-3 mb-3">
+          <span class="text-2xl">💡</span>
+          <h3 class="font-[Orbitron] text-cyan-400 text-sm">Shelly Control</h3>
+        </div>
+        <p class="text-gray-400 text-sm mb-4" data-i18n="proj_shelly_desc">Contrôle et monitoring des prises connectées Shelly — pilotage, export métriques vers Prometheus, intégration domotique maison.</p>
+        <div class="flex flex-wrap gap-2">
+          <span class="tag">Python</span><span class="tag">Shelly</span><span class="tag">Prometheus</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="flex items-center gap-3 mb-3">
+          <span class="text-2xl">📈</span>
+          <h3 class="font-[Orbitron] text-cyan-400 text-sm">Stock Screener + IB Gateway</h3>
+        </div>
+        <p class="text-gray-400 text-sm mb-4" data-i18n="proj_stocks_desc">Application maison de screening boursier déployée en K8s, couplée à un IB Gateway (Interactive Brokers) pour données temps réel. Images GHCR pinnées, CI/CD automatisé.</p>
+        <div class="flex flex-wrap gap-2">
+          <span class="tag">Finance</span><span class="tag">Interactive Brokers</span>
+          <span class="tag">K8s</span><span class="tag">GHCR</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="flex items-center gap-3 mb-3">
+          <span class="text-2xl">🤖</span>
+          <h3 class="font-[Orbitron] text-cyan-400 text-sm">Bots Discord & Japonais</h3>
+        </div>
+        <p class="text-gray-400 text-sm mb-4" data-i18n="proj_bots_desc">3 bots Discord (kame, chihiro, jordan) déployés en K8s avec Sealed Secrets. App chihiro-japanese pour l'apprentissage du japonais avec exercices et quiz.</p>
+        <div class="flex flex-wrap gap-2">
+          <span class="tag">Discord</span><span class="tag">JavaScript</span>
+          <span class="tag">Sealed Secrets</span><span class="tag">日本語</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Apps déployées sur le cluster -->
+    <h3 class="font-[Orbitron] text-cyan-400 text-sm mb-4 uppercase tracking-widest" data-i18n="proj_apps_title">Applications déployées sur le cluster</h3>
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+
+      <div class="card text-center p-3">
+        <div class="text-xl mb-1">📺</div>
+        <div class="font-[Orbitron] text-cyan-400 text-xs mb-1">Plex</div>
+        <div class="text-gray-500 text-xs" data-i18n="app_plex">Média · NFS</div>
+      </div>
+
+      <div class="card text-center p-3">
+        <div class="text-xl mb-1">📚</div>
+        <div class="font-[Orbitron] text-cyan-400 text-xs mb-1">Kavita</div>
+        <div class="text-gray-500 text-xs" data-i18n="app_kavita">Manga · SMB</div>
+      </div>
+
+      <div class="card text-center p-3">
+        <div class="text-xl mb-1">🍽️</div>
+        <div class="font-[Orbitron] text-cyan-400 text-xs mb-1">Mealie</div>
+        <div class="text-gray-500 text-xs" data-i18n="app_mealie">Recettes · n8n</div>
+      </div>
+
+      <div class="card text-center p-3">
+        <div class="text-xl mb-1">🔄</div>
+        <div class="font-[Orbitron] text-cyan-400 text-xs mb-1">n8n</div>
+        <div class="text-gray-500 text-xs">Automation</div>
+      </div>
+
+      <div class="card text-center p-3">
+        <div class="text-xl mb-1">🏠</div>
+        <div class="font-[Orbitron] text-cyan-400 text-xs mb-1">Home Assistant</div>
+        <div class="text-gray-500 text-xs" data-i18n="app_ha">Domotique</div>
+      </div>
+
+      <div class="card text-center p-3">
+        <div class="text-xl mb-1">📊</div>
+        <div class="font-[Orbitron] text-cyan-400 text-xs mb-1">Supabase</div>
+        <div class="text-gray-500 text-xs">Backend · MCP</div>
+      </div>
+
+      <div class="card text-center p-3">
+        <div class="text-xl mb-1">🌐</div>
+        <div class="font-[Orbitron] text-cyan-400 text-xs mb-1">Kong</div>
+        <div class="text-gray-500 text-xs">API Gateway</div>
+      </div>
+
+      <div class="card text-center p-3">
+        <div class="text-xl mb-1">📄</div>
+        <div class="font-[Orbitron] text-cyan-400 text-xs mb-1">Paperless</div>
+        <div class="text-gray-500 text-xs" data-i18n="app_paperless">GED · NFS</div>
+      </div>
+
+      <div class="card text-center p-3">
+        <div class="text-xl mb-1">📥</div>
+        <div class="font-[Orbitron] text-cyan-400 text-xs mb-1">Transmission</div>
+        <div class="text-gray-500 text-xs">BitTorrent · NFS</div>
+      </div>
+
+      <div class="card text-center p-3">
+        <div class="text-xl mb-1">📈</div>
+        <div class="font-[Orbitron] text-cyan-400 text-xs mb-1">Stock Screener</div>
+        <div class="text-gray-500 text-xs">Finance</div>
+      </div>
+
+      <div class="card text-center p-3">
+        <div class="text-xl mb-1">📡</div>
+        <div class="font-[Orbitron] text-cyan-400 text-xs mb-1">IB Gateway</div>
+        <div class="text-gray-500 text-xs">Brokers</div>
+      </div>
+
+      <div class="card text-center p-3">
+        <div class="text-xl mb-1">🥗</div>
+        <div class="font-[Orbitron] text-cyan-400 text-xs mb-1">Neko Diet</div>
+        <div class="text-gray-500 text-xs">Nutrition</div>
+      </div>
+
+    </div>
+  </div>
+</section>

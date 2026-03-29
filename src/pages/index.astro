@@ -1,0 +1,106 @@
+---
+import '@fontsource/press-start-2p/400.css';
+import '@fontsource/rajdhani/400.css';
+import '@fontsource/rajdhani/600.css';
+import '@fontsource/rajdhani/700.css';
+import '../styles/landing.css';
+import BaseHead from '../components/BaseHead.astro';
+import Analytics from '../components/Analytics.astro';
+---
+
+<!doctype html>
+<html lang="fr">
+<head>
+  <BaseHead
+    title="Jonathan Aerts — Cloud Solutions Architect"
+    description="Cloud Solutions Architect with 15+ years IT experience. Specialized in Azure Landing Zones, Terraform/Terragrunt IaC, and enterprise cloud platforms. Belgium/Luxembourg — Open to Japan."
+    canonicalURL="https://jonathan-aerts.dev/"
+    noindex={true}
+  />
+  <meta property="article:published_time" content="2025-03-01T00:00:00Z" />
+</head>
+
+<body>
+  <div class="landing">
+    <div class="scanlines" aria-hidden="true" role="presentation"></div>
+    <div class="grid-bg" aria-hidden="true" role="presentation"></div>
+    <canvas id="starsCanvas" class="stars-canvas" aria-hidden="true" role="presentation"></canvas>
+
+    <noscript>
+      <div style="text-align:center;padding:2rem;color:#fff;font-family:sans-serif;">
+        <h1>Jonathan Aerts — Cloud Solutions Architect</h1>
+        <p style="margin:1rem 0;">JavaScript is required for the full experience.</p>
+        <p><a href="/recruiter" style="color:#00ffe7;">Recruiter profile</a> · <a href="/full" style="color:#00ffe7;">Full portfolio</a></p>
+      </div>
+    </noscript>
+
+    <main class="container">
+
+      <div class="lang-switcher" role="group" aria-label="Change language">
+        <button id="btn-fr" class="l-lang-btn" data-lang="fr" aria-label="Français">FR</button>
+        <button id="btn-en" class="l-lang-btn" data-lang="en" aria-label="English">EN</button>
+        <button id="btn-jp" class="l-lang-btn" data-lang="jp" aria-label="日本語">JP</button>
+      </div>
+
+      <header class="header">
+        <p class="insert-coin">▶ INSERT COIN ◀</p>
+        <h1 class="title">JONATHAN AERTS</h1>
+        <p class="title title-sub">CLOUD SOLUTIONS ARCHITECT</p>
+        <p class="select-label" data-i18n="l_select">— choisissez votre profil pour continuer —</p>
+      </header>
+
+      <nav class="levels" aria-label="Sélection du profil visiteur">
+
+        <a href="/recruiter" class="level-card level-1" aria-label="Profil Recruteur / RH">
+          <span class="corner tl"></span><span class="corner tr"></span>
+          <span class="corner bl"></span><span class="corner br"></span>
+          <span class="level-num">01</span>
+          <span class="level-name" data-i18n="l_lv1_name">RECRUTEUR / RH</span>
+          <p class="level-desc" data-i18n="l_lv1_desc">Vous cherchez un profil Cloud senior. Vous avez 90 secondes.</p>
+          <div class="badges">
+            <span class="badge">CV</span>
+            <span class="badge" data-i18n="l_badge_exp">Expérience</span>
+            <span class="badge">Contact</span>
+          </div>
+        </a>
+
+        <a href="/full" class="level-card level-2" aria-label="Profil Technique complet">
+          <span class="corner tl"></span><span class="corner tr"></span>
+          <span class="corner bl"></span><span class="corner br"></span>
+          <span class="level-num">02</span>
+          <span class="level-name" data-i18n="l_lv2_name">PROFIL TECHNIQUE</span>
+          <p class="level-desc" data-i18n="l_lv2_desc">Vous savez ce qu'est un Terragrunt DRY stack. On va s'entendre.</p>
+          <div class="badges">
+            <span class="badge">Stack</span>
+            <span class="badge" data-i18n="l_badge_projects">Projets</span>
+            <span class="badge">Homelab</span>
+          </div>
+        </a>
+
+        <a href="/curious" class="level-card level-3" aria-label="Curieux / Autre">
+          <span class="corner tl"></span><span class="corner tr"></span>
+          <span class="corner bl"></span><span class="corner br"></span>
+          <span class="level-num">03</span>
+          <span class="level-name" data-i18n="l_lv3_name">CURIEUX / AUTRE</span>
+          <p class="level-desc" data-i18n="l_lv3_desc">Vous êtes tombé ici par hasard. Bienvenue quand même.</p>
+          <div class="badges">
+            <span class="badge" data-i18n="l_badge_about">À propos</span>
+            <span class="badge" data-i18n="l_badge_passions">Passions</span>
+            <span class="badge">Homelab</span>
+          </div>
+        </a>
+
+      </nav>
+
+      <a href="/full" class="skip-link" data-i18n="l_skip">[ passer la sélection → site complet ]</a>
+
+    </main>
+  </div>
+</body>
+</html>
+
+<script>
+  import '../scripts/stars';
+  import '../scripts/i18n';
+</script>
+<Analytics />
