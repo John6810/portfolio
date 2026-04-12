@@ -1,0 +1,372 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Analytics from '../../components/Analytics.astro';
+import '@fontsource/sora/600.css';
+import '@fontsource/sora/700.css';
+import '@fontsource/inter/400.css';
+import '@fontsource/inter/600.css';
+import '@fontsource/inter/700.css';
+import '../../styles/recruiter.css';
+
+const code1 = `resource "azurerm_network_interface" "management" {
+  name                           = "nic-\${var.name}-mgmt"
+  location                       = var.location
+  resource_group_name            = var.resource_group_name
+  accelerated_networking_enabled = false
+  ip_forwarding_enabled          = false
+
+  ip_configuration {
+    name                          = "internal"
+    subnet_id                     = var.management_subnet_id
+    private_ip_address_allocation = "Static"
+    private_ip_address            = var.management_private_ip
+  }
+}
+
+resource "azurerm_network_interface" "dataplane" {
+  for_each                       = var.dataplane_nics
+  name                           = "nic-\${var.name}-\${each.key}"
+  location                       = var.location
+  resource_group_name            = var.resource_group_name
+  accelerated_networking_enabled = true
+  ip_forwarding_enabled          = true
+
+  ip_configuration {
+    name                          = "internal"
+    subnet_id                     = each.value.subnet_id
+    private_ip_address_allocation = "Static"
+    private_ip_address            = each.value.private_ip
+  }
+}`;
+
+const code2 = `resource "azurerm_lb_rule" "ha_ports" {
+  name                           = "rule-ha-ports"
+  loadbalancer_id                = azurerm_lb.trust.id
+  protocol                       = "All"
+  frontend_port                  = 0
+  backend_port                   = 0
+  frontend_ip_configuration_name = "trust-frontend"
+  backend_address_pool_ids       = [azurerm_lb_backend_address_pool.trust.id]
+  probe_id                       = azurerm_lb_probe.trust.id
+  floating_ip_enabled            = false
+  enable_tcp_reset               = true
+}
+
+resource "azurerm_lb_probe" "trust" {
+  name                = "probe-tcp-443"
+  loadbalancer_id     = azurerm_lb.trust.id
+  protocol            = "Tcp"
+  port                = 443
+  interval_in_seconds = 5
+  probe_threshold     = 2
+}`;
+
+const code3 = `resource "azurerm_route" "trust_blackhole" {
+  name                = "blackhole-default"
+  resource_group_name = var.resource_group_name
+  route_table_name    = azurerm_route_table.trust.name
+  address_prefix      = "0.0.0.0/0"
+  next_hop_type       = "None"
+}
+
+resource "azurerm_route" "untrust_blackhole_rfc1918_10" {
+  name                = "blackhole-10"
+  resource_group_name = var.resource_group_name
+  route_table_name    = azurerm_route_table.untrust.name
+  address_prefix      = "10.0.0.0/8"
+  next_hop_type       = "None"
+}`;
+
+const code4 = `storage-account=mystorageacct;access-key=xxx;file-share=bootstrap;share-directory=config`;
+
+const code5 = `resource "azurerm_linux_virtual_machine" "fw" {
+  # ...
+  allow_extension_operations         = false
+  disable_password_authentication    = var.admin_ssh_public_key != null ? true : false
+  encryption_at_host_enabled         = true
+  vtpm_enabled                       = true
+  secure_boot_enabled                = true
+
+  os_disk {
+    disk_encryption_set_id = azurerm_disk_encryption_set.fw.id
+    # ...
+  }
+
+  lifecycle {
+    prevent_destroy = true
+  }
+}`;
+
+const code6 = `resource "azurerm_key_vault" "fw" {
+  name                       = "kv-\${var.subscription_acronym}-\${var.environment}-\${var.region_code}-fw"
+  location                   = var.location
+  resource_group_name        = var.resource_group_name
+  tenant_id                  = data.azurerm_client_config.current.tenant_id
+  sku_name                   = "premium"
+  enable_rbac_authorization  = true
+  purge_protection_enabled   = true
+  soft_delete_retention_days = 90
+
+  network_acls {
+    default_action = "Deny"
+    bypass         = "AzureServices"
+  }
+
+  lifecycle {
+    prevent_destroy = true
+  }
+}`;
+
+const code7 = `resource "azurerm_application_insights" "fw" {
+  for_each            = var.firewall_instances
+  name                = "appi-\${var.subscription_acronym}-\${var.environment}-\${var.region_code}-\${each.key}"
+  location            = var.location
+  resource_group_name = var.resource_group_name
+  application_type    = "other"
+  workspace_id        = var.log_analytics_workspace_id
+}`;
+
+const code8 = `resource "azurerm_role_definition" "panos_metrics" {
+  name  = "\${local.prefix}-\${var.workload}-panos-metrics"
+  scope = data.azurerm_subscription.current.id
+
+  permissions {
+    actions = [
+      "Microsoft.Insights/Metrics/Read",
+      "Microsoft.Insights/MetricDefinitions/Read",
+    ]
+  }
+
+  assignable_scopes = [data.azurerm_subscription.current.id]
+}`;
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <BaseHead
+    title="Azure Landing Zone with Palo Alto NVA: Lessons Learned — Jonathan Aerts"
+    description="Hard-won lessons from deploying Palo Alto VM-Series as NVA in an Azure Landing Zone: accelerated networking, ILB HA ports, bootstrap pitfalls, security hardening, and monitoring."
+    canonicalURL="https://jonathan-aerts.dev/blog/palo-alto-nva-lessons"
+    themeColor="#ffffff"
+  />
+  <style>
+    .article { max-width: var(--max-w); margin: 0 auto; padding: 3rem 1.5rem 4rem; }
+    .article h1 { font-family: 'Sora', sans-serif; font-size: 1.75rem; font-weight: 700; color: var(--gray-9); line-height: 1.3; margin-bottom: 0.5rem; }
+    .article h2 { font-family: 'Sora', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--gray-9); margin-top: 2.5rem; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--blue); display: inline-block; }
+    .article h2 + * { clear: both; }
+    .article h3 { font-family: 'Sora', sans-serif; font-size: 0.95rem; font-weight: 600; color: var(--gray-9); margin-top: 1.75rem; margin-bottom: 0.75rem; }
+    .article p { color: var(--gray-7); line-height: 1.8; margin-bottom: 1.25rem; font-size: 0.93rem; }
+    .article a { color: var(--blue); text-decoration: underline; text-underline-offset: 3px; }
+    .article a:hover { color: var(--blue-md); }
+    .article ul { color: var(--gray-7); margin-bottom: 1.25rem; padding-left: 1.5rem; }
+    .article li { margin-bottom: 0.5rem; line-height: 1.7; font-size: 0.93rem; }
+    .article li::marker { color: var(--blue); }
+    .article code { background: var(--blue-lt); color: var(--blue); padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.82rem; }
+    .article pre { background: var(--gray-9); border-radius: 8px; padding: 1.25rem; overflow-x: auto; margin-bottom: 1.5rem; }
+    .article pre code { background: none; padding: 0; color: #e2e8f0; font-size: 0.8rem; line-height: 1.65; }
+    .article blockquote { border-left: 3px solid var(--blue); padding-left: 1rem; margin: 1.5rem 0; color: var(--gray-5); font-style: italic; }
+    .article .meta { color: var(--gray-5); font-size: 0.85rem; margin-bottom: 2rem; }
+    .article .tag { display: inline-block; background: var(--blue-lt); border: 1px solid rgba(30,64,175,0.15); color: var(--blue); padding: 0.15rem 0.6rem; border-radius: 9999px; font-size: 0.72rem; font-weight: 500; margin-right: 0.3rem; }
+    .article .callout { background: var(--blue-lt); border: 1px solid rgba(30,64,175,0.15); border-radius: 8px; padding: 1rem 1.25rem; margin: 1.5rem 0; }
+    .article .callout-title { color: var(--blue); font-family: 'Sora', sans-serif; font-weight: 600; font-size: 0.85rem; margin-bottom: 0.5rem; }
+    .back-link { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--blue); font-size: 0.85rem; text-decoration: none; margin-bottom: 2rem; }
+    .back-link:hover { color: var(--blue-md); }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; margin: 1.5rem 0 2.5rem; }
+    .stat-card { background: var(--gray-1); border: 1px solid var(--gray-3); border-radius: 8px; padding: 1rem; text-align: center; }
+    .stat-card .stat-num { font-family: 'Sora', sans-serif; color: var(--blue); font-size: 1.5rem; font-weight: 700; }
+    .stat-card .stat-label { color: var(--gray-5); font-size: 0.72rem; margin-top: 0.25rem; }
+    .cta-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.65rem 1.25rem; border: 1px solid var(--blue); border-radius: 8px; color: var(--blue); text-decoration: none; font-family: 'Sora', sans-serif; font-size: 0.85rem; font-weight: 600; transition: all 0.15s; }
+    .cta-btn:hover { background: var(--blue-lt); text-decoration: none; }
+    @media (max-width: 640px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="/full" class="topnav-back">&larr; Portfolio</a>
+  <span class="topnav-name">Jonathan Aerts</span>
+  <div class="topnav-links">
+    <a href="https://linkedin.com/in/jaerts085/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+    <a href="https://github.com/John6810" target="_blank" rel="noopener noreferrer">GitHub</a>
+  </div>
+</nav>
+
+<main class="article">
+
+  <a href="/full#cloud-architecture" class="back-link">&larr; Back to portfolio</a>
+
+  <h1>Azure Landing Zone with Palo Alto NVA: Lessons Learned</h1>
+  <p class="meta">Jonathan Aerts &middot; April 2026 &middot; 10 min read</p>
+  <div style="margin-bottom: 2rem;">
+    <span class="tag">Palo Alto</span>
+    <span class="tag">Azure</span>
+    <span class="tag">NVA</span>
+    <span class="tag">ILB</span>
+    <span class="tag">Terraform</span>
+    <span class="tag">Landing Zone</span>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card"><div class="stat-num">2</div><div class="stat-label">FW instances</div></div>
+    <div class="stat-card"><div class="stat-num">3</div><div class="stat-label">NICs per FW</div></div>
+    <div class="stat-card"><div class="stat-num">1</div><div class="stat-label">ILB HA ports</div></div>
+    <div class="stat-card"><div class="stat-num">0</div><div class="stat-label">Public IPs</div></div>
+  </div>
+
+  <p>Deploying Palo Alto VM-Series as a Network Virtual Appliance in an Azure Landing Zone sounds straightforward &mdash; until you actually do it. This article covers the hard-won lessons from building the firewall layer of a production landing zone: the NIC configuration that unlocks 50% more throughput, the ILB setup that prevents routing loops, the bootstrap format that silently fails if you get it wrong, and the security hardening that goes beyond the defaults.</p>
+
+  <h2>The Transit VNet Architecture</h2>
+
+  <p>The firewall layer follows a <strong>hub-and-spoke transit VNet</strong> model with Palo Alto VM-Series as the NVA. The design is based on the official <a href="https://github.com/PaloAltoNetworks/terraform-azurerm-swfw-modules/tree/main/examples/vmseries_transit_vnet_dedicated_vwan" target="_blank" rel="noopener noreferrer">vmseries_transit_vnet_dedicated_vwan</a> reference architecture from Palo Alto Networks.</p>
+
+  <p>Key design decisions:</p>
+
+  <ul>
+    <li><strong>Fixed instances, no VMSS</strong> &mdash; Two VM-Series firewalls behind an Internal Load Balancer. We use BYOL (Bring Your Own License) licensing, which doesn't support VMSS autoscale. Two instances give us active/active HA without the complexity of VMSS lifecycle management.</li>
+    <li><strong>3 NICs per firewall</strong> &mdash; Management (for PAN-OS admin access), untrust (internet-facing, behind NAT Gateway for outbound), and trust (internal, receives all spoke traffic via the ILB).</li>
+    <li><strong>ILB with HA ports on trust subnet</strong> &mdash; Every spoke's UDR sends <code>0.0.0.0/0</code> to the ILB frontend IP. The ILB distributes across both firewall trust interfaces.</li>
+  </ul>
+
+  <div class="callout">
+    <div class="callout-title">Traffic Flow</div>
+    <p style="margin:0; font-size: 0.9rem;">Spoke VM &rarr; UDR (0.0.0.0/0 &rarr; ILB frontend) &rarr; ILB HA ports &rarr; FW trust NIC &rarr; PAN-OS policy decision &rarr; FW untrust NIC &rarr; NAT Gateway (internet) or trust NIC (east-west to another spoke)</p>
+  </div>
+
+  <h2>Getting Accelerated Networking Right</h2>
+
+  <p>After the initial deployment, throughput tests were disappointing. The fix was a single boolean &mdash; but <em>which</em> NIC gets it matters enormously.</p>
+
+  <ul>
+    <li><strong>Management NIC:</strong> <code>accelerated_networking_enabled = false</code>, <code>ip_forwarding_enabled = false</code>. This must be explicit &mdash; don't rely on defaults. The management interface handles PAN-OS admin traffic only and must not use DPDK mode.</li>
+    <li><strong>Dataplane NICs (trust + untrust):</strong> <code>accelerated_networking_enabled = true</code>, <code>ip_forwarding_enabled = true</code>. This enables DPDK mode in PAN-OS, which bypasses the Azure virtual switch and gives the firewall direct access to the physical NIC's SR-IOV virtual function.</li>
+  </ul>
+
+  <p>The result: <strong>~50% throughput improvement</strong> on a single boolean change. The official Palo Alto Terraform module does this correctly by default. If you build your own module (as I did for Terragrunt compatibility), don't forget.</p>
+
+  <pre><code>{code1}</code></pre>
+
+  <p>Notice the explicit split: management gets <code>false/false</code>, dataplane gets <code>true/true</code>. No ambiguity, no defaults to guess about.</p>
+
+  <h2>The ILB HA Ports Configuration</h2>
+
+  <p>The Internal Load Balancer on the trust subnet is the linchpin of the architecture. Every spoke's traffic flows through it. Getting the configuration wrong means either dropped packets or routing loops.</p>
+
+  <h3>The LB Rule</h3>
+
+  <p>HA ports means <code>protocol = "All"</code> with <code>frontend_port = 0</code> and <code>backend_port = 0</code>. This forwards all protocols and all ports to the backend pool &mdash; exactly what you need for an NVA that inspects everything.</p>
+
+  <pre><code>{code2}</code></pre>
+
+  <p>Two details that are easy to get wrong:</p>
+
+  <ul>
+    <li><strong><code>floating_ip_enabled = false</code></strong> &mdash; For the outbound/east-west (OBEW) load balancer pair, floating IP must be disabled. With floating IP enabled, the firewall would see the ILB frontend IP as the destination instead of the real destination, breaking its routing decisions.</li>
+    <li><strong>Health probe: TCP/443 with <code>probe_threshold = 2</code></strong> &mdash; PAN-OS exposes its management interface on 443. Two consecutive failures (at 5-second intervals) before marking a backend unhealthy gives PAN-OS enough time to handle brief control plane hiccups without triggering a failover.</li>
+  </ul>
+
+  <h3>The Blackhole Routes</h3>
+
+  <p>This is where most transit VNet deployments go wrong. Without blackhole routes, you get routing loops:</p>
+
+  <pre><code>{code3}</code></pre>
+
+  <ul>
+    <li><strong>Trust subnet:</strong> needs a <code>0.0.0.0/0 &rarr; None</code> blackhole. Without it, traffic from the firewall's trust NIC that doesn't match a more specific route would hit the default system route and go back to the ILB &mdash; creating an infinite loop.</li>
+    <li><strong>Untrust subnet:</strong> needs blackhole routes for RFC 1918 ranges (<code>10.0.0.0/8</code>, <code>172.16.0.0/12</code>, <code>192.168.0.0/16</code>). Without these, return traffic for private IPs would leak to the internet path instead of going back through the firewall.</li>
+  </ul>
+
+  <h2>Bootstrap: The Silent Failure</h2>
+
+  <p>Palo Alto VM-Series firewalls bootstrap their configuration from an Azure Storage File Share. The <code>custom_data</code> field passes the storage account reference. Get the format wrong and PAN-OS boots without configuration &mdash; no error, no log, just a firewall with no policies.</p>
+
+  <pre><code>{code4}</code></pre>
+
+  <p>Four things I learned the hard way:</p>
+
+  <ul>
+    <li><strong>Storage account NAME, not ARM resource ID</strong> &mdash; PAN-OS expects <code>mystorageacct</code>, not <code>/subscriptions/.../storageAccounts/mystorageacct</code>. It doesn't validate the format. If you pass the wrong thing, it silently fails to connect and boots with factory defaults.</li>
+    <li><strong>Semicolon separator, not newline</strong> &mdash; The key-value pairs are separated by <code>;</code>. Using <code>\n</code> or any other delimiter causes a silent parse failure.</li>
+    <li><strong>Access key in custom_data</strong> &mdash; This follows the same pattern as the official Palo Alto reference architecture. The access key is passed directly in the VM's <code>custom_data</code> field, base64-encoded by Azure.</li>
+    <li><strong><code>share-directory</code> for multi-config bootstraps</strong> &mdash; If you store multiple firewall configurations in the same file share (one directory per instance), use the <code>share-directory</code> parameter to point each VM to its own config directory.</li>
+  </ul>
+
+  <div class="callout">
+    <div class="callout-title">Debugging Tip</div>
+    <p style="margin:0; font-size: 0.9rem;">If the firewall boots but has no policies, check bootstrap first. Connect to the management interface and run <code>show system bootstrap status</code> in the PAN-OS CLI. If it says "Bootstrap not attempted", the custom_data format is wrong.</p>
+  </div>
+
+  <h2>Security Hardening</h2>
+
+  <p>Firewalls are the most critical resources in the landing zone. If they're compromised, everything behind them is exposed. The hardening goes well beyond the Azure defaults.</p>
+
+  <pre><code>{code5}</code></pre>
+
+  <h3>VM-Level Hardening</h3>
+
+  <ul>
+    <li><strong><code>allow_extension_operations = false</code></strong> &mdash; Disables the Azure VM agent's ability to install extensions. This is official Palo Alto best practice: no extensions should run on a security appliance.</li>
+    <li><strong>Dynamic password authentication</strong> &mdash; If an SSH public key is provided, password authentication is disabled automatically. If not, a random password is generated and stored in Key Vault.</li>
+    <li><strong>CMK double encryption</strong> &mdash; OS disk is encrypted with both platform-managed keys and a customer-managed key via a Disk Encryption Set. The CMK lives in a dedicated Key Vault with RBAC authorization and purge protection.</li>
+    <li><strong><code>prevent_destroy</code> on VMs</strong> &mdash; A <code>terragrunt destroy</code> or accidental resource removal in code won't delete the firewalls. You'd have to explicitly remove the lifecycle block first &mdash; a deliberate, reviewable change.</li>
+  </ul>
+
+  <h3>Key Vault Hardening</h3>
+
+  <p>The firewall Key Vault stores the admin password, the CMK encryption key, and the bootstrap access key. It gets the full treatment:</p>
+
+  <pre><code>{code6}</code></pre>
+
+  <ul>
+    <li><strong>Premium SKU</strong> &mdash; Required for HSM-backed keys (used by the Disk Encryption Set).</li>
+    <li><strong>RBAC authorization</strong> &mdash; No access policies. All access is through Entra ID role assignments, auditable and revocable.</li>
+    <li><strong>90-day soft delete + purge protection</strong> &mdash; Even if someone deletes a key, it's recoverable for 90 days and can't be purged.</li>
+    <li><strong>Network ACLs: Deny + AzureServices bypass</strong> &mdash; Only Azure-internal services (like the Disk Encryption Set) can reach the vault. No public access.</li>
+    <li><strong><code>prevent_destroy</code></strong> &mdash; Same protection as the VMs. Losing the Key Vault means losing the CMK, which means losing access to the encrypted disks.</li>
+  </ul>
+
+  <h2>Monitoring with Application Insights</h2>
+
+  <p>Each firewall instance gets its own Application Insights resource. PAN-OS can push metrics (session counts, throughput, threat logs) to APPI via a Service Principal.</p>
+
+  <pre><code>{code7}</code></pre>
+
+  <p>The SPN that PAN-OS uses to push metrics gets a <strong>custom least-privilege role</strong> instead of a built-in role. Built-in roles like "Monitoring Metrics Publisher" include permissions the firewall doesn't need. The custom role is scoped to the subscription:</p>
+
+  <pre><code>{code8}</code></pre>
+
+  <p>Notice the role name includes <code>$&#123;local.prefix&#125;-$&#123;var.workload&#125;</code>. This prevents naming collisions between prod and nprd, which share the same subscription. Without the environment-specific prefix, Terraform would try to create two custom roles with the same name and fail.</p>
+
+  <h2>What I'd Do Differently</h2>
+
+  <p>After deploying this architecture across two environments, here are the things I'd change if I started over:</p>
+
+  <ul>
+    <li><strong>Pin the PAN-OS image version from day 1</strong> &mdash; We initially used <code>latest</code> for the marketplace image, which meant the image could change between plan and apply, or between the two firewall instances. For firewalls, deterministic deployments are non-negotiable. Pin the exact version (e.g., <code>10.2.9</code>) and upgrade deliberately.</li>
+    <li><strong>Enable boot diagnostics immediately</strong> &mdash; Boot diagnostics capture the serial console output, which is invaluable when PAN-OS fails to bootstrap. We added it after the first bootstrap debugging session. It should have been there from the start.</li>
+    <li><strong>Create trust/untrust route tables before the VNet, not after</strong> &mdash; The route tables with their blackhole routes need to exist before any subnet is created. In our deployment order, we created the VNet first and the route tables second, which meant there was a brief window where the subnets had no blackhole routes. Not a security issue in practice (no traffic was flowing yet), but it's cleaner to have the route tables at Tier 1 alongside NSGs.</li>
+    <li><strong>Automate the PAN-OS initial commit</strong> &mdash; After bootstrap, PAN-OS loads the configuration but doesn't commit it. The first commit has to be done manually through the web UI or API. A post-deployment script that hits the PAN-OS XML API to trigger a commit would save 10 minutes per firewall per deployment.</li>
+  </ul>
+
+  <blockquote>The firewall is the last line of defense. Every shortcut you take in its deployment is a shortcut an attacker might exploit. Build it right the first time &mdash; there's no "we'll harden it later" for the component that protects everything else.</blockquote>
+
+  <h2>The Full Module</h2>
+
+  <p>The Palo Alto VM-Series module is part of the open-source <code>terraform-azurerm-modules</code> library that powers this landing zone. It includes the NIC configuration, ILB setup, bootstrap, Key Vault integration, Application Insights, and all the hardening described in this article.</p>
+
+  <div style="text-align: center; margin: 2rem 0;">
+    <a href="https://github.com/John6810/terraform-azurerm-modules" target="_blank" rel="noopener noreferrer" class="cta-btn">
+      View on GitHub &rarr;
+    </a>
+  </div>
+
+  <div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--gray-3); text-align: center;">
+    <p style="color: var(--gray-5); font-size: 0.85rem;">
+      Jonathan Aerts &middot; Cloud Solutions Architect &middot; <a href="https://linkedin.com/in/jaerts085/" target="_blank" rel="noopener noreferrer">LinkedIn</a> &middot; <a href="https://github.com/John6810" target="_blank" rel="noopener noreferrer">GitHub</a> &middot; <a href="/full">Full Portfolio</a>
+    </p>
+  </div>
+
+</main>
+
+<Analytics />
+</body>
+</html>
