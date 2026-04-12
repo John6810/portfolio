@@ -1,11 +1,12 @@
 ---
 import BaseHead from '../../components/BaseHead.astro';
 import Analytics from '../../components/Analytics.astro';
+import '@fontsource/sora/600.css';
+import '@fontsource/sora/700.css';
 import '@fontsource/inter/400.css';
 import '@fontsource/inter/600.css';
 import '@fontsource/inter/700.css';
-import '@fontsource/orbitron/600.css';
-import '../../styles/global.css';
+import '../../styles/recruiter.css';
 
 const code1 = `resource "azapi_resource" "subnet" {
   type      = "Microsoft.Network/virtualNetworks/subnets@2025-03-01"
@@ -67,44 +68,56 @@ const code7 = `lifecycle {
     title="Building 35 Terraform Modules for an Azure Landing Zone — Jonathan Aerts"
     description="How I built an enterprise Azure Landing Zone from scratch with 35 custom Terraform modules aligned with Azure Verified Modules patterns, Palo Alto NVA, and Terragrunt."
     canonicalURL="https://jonathan-aerts.dev/blog/azure-landing-zone"
+    themeColor="#ffffff"
   />
   <style>
-    body { background: linear-gradient(135deg, #0a0015 0%, #0d0221 50%, #060a12 100%); }
-    .article { max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
-    .article h1 { font-family: 'Orbitron', sans-serif; color: #00F5FF; font-size: 1.8rem; line-height: 1.3; margin-bottom: 0.5rem; }
-    .article h2 { font-family: 'Orbitron', sans-serif; color: #00F5FF; font-size: 1.1rem; margin-top: 3rem; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(0, 245, 255, 0.15); }
-    .article h3 { color: #67e8f9; font-size: 1rem; font-weight: 600; margin-top: 2rem; margin-bottom: 0.75rem; }
-    .article p { color: #d1d5db; line-height: 1.8; margin-bottom: 1.25rem; font-size: 0.95rem; }
-    .article a { color: #00F5FF; text-decoration: underline; text-underline-offset: 3px; }
-    .article a:hover { color: #67e8f9; }
-    .article ul { color: #d1d5db; margin-bottom: 1.25rem; padding-left: 1.5rem; }
-    .article li { margin-bottom: 0.5rem; line-height: 1.7; font-size: 0.95rem; }
-    .article li::marker { color: #00F5FF; }
-    .article code { background: rgba(0, 245, 255, 0.08); color: #67e8f9; padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.85rem; }
-    .article pre { background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(0, 245, 255, 0.15); border-radius: 8px; padding: 1.25rem; overflow-x: auto; margin-bottom: 1.5rem; }
-    .article pre code { background: none; padding: 0; color: #e5e7eb; font-size: 0.82rem; line-height: 1.6; }
-    .article blockquote { border-left: 3px solid #00F5FF; padding-left: 1rem; margin: 1.5rem 0; color: #9ca3af; font-style: italic; }
-    .article .meta { color: #6b7280; font-size: 0.85rem; margin-bottom: 2.5rem; }
-    .article .tag { display: inline-block; background: rgba(0, 245, 255, 0.08); border: 1px solid rgba(0, 245, 255, 0.2); color: #67e8f9; padding: 0.15rem 0.6rem; border-radius: 9999px; font-size: 0.75rem; margin-right: 0.4rem; }
-    .article .callout { background: rgba(0, 245, 255, 0.05); border: 1px solid rgba(0, 245, 255, 0.2); border-radius: 8px; padding: 1rem 1.25rem; margin: 1.5rem 0; }
-    .article .callout-title { color: #00F5FF; font-weight: 600; font-size: 0.9rem; margin-bottom: 0.5rem; }
-    .back-link { display: inline-flex; align-items: center; gap: 0.5rem; color: #00F5FF; font-size: 0.85rem; text-decoration: none; margin-bottom: 2rem; }
-    .back-link:hover { color: #67e8f9; }
-    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; margin: 1.5rem 0; }
-    .stat-card { background: rgba(0, 245, 255, 0.05); border: 1px solid rgba(0, 245, 255, 0.2); border-radius: 8px; padding: 1rem; text-align: center; }
-    .stat-num { font-family: 'Orbitron', sans-serif; color: #00F5FF; font-size: 1.5rem; font-weight: 600; }
-    .stat-label { color: #9ca3af; font-size: 0.75rem; margin-top: 0.25rem; }
+    .article { max-width: var(--max-w); margin: 0 auto; padding: 3rem 1.5rem 4rem; }
+    .article h1 { font-family: 'Sora', sans-serif; font-size: 1.75rem; font-weight: 700; color: var(--gray-9); line-height: 1.3; margin-bottom: 0.5rem; }
+    .article h2 { font-family: 'Sora', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--gray-9); margin-top: 2.5rem; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--blue); display: inline-block; }
+    .article h2 + * { clear: both; }
+    .article h3 { font-family: 'Sora', sans-serif; font-size: 0.95rem; font-weight: 600; color: var(--gray-9); margin-top: 1.75rem; margin-bottom: 0.75rem; }
+    .article p { color: var(--gray-7); line-height: 1.8; margin-bottom: 1.25rem; font-size: 0.93rem; }
+    .article a { color: var(--blue); text-decoration: underline; text-underline-offset: 3px; }
+    .article a:hover { color: var(--blue-md); }
+    .article ul { color: var(--gray-7); margin-bottom: 1.25rem; padding-left: 1.5rem; }
+    .article li { margin-bottom: 0.5rem; line-height: 1.7; font-size: 0.93rem; }
+    .article li::marker { color: var(--blue); }
+    .article code { background: var(--blue-lt); color: var(--blue); padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.82rem; }
+    .article pre { background: var(--gray-9); border-radius: 8px; padding: 1.25rem; overflow-x: auto; margin-bottom: 1.5rem; }
+    .article pre code { background: none; padding: 0; color: #e2e8f0; font-size: 0.8rem; line-height: 1.65; }
+    .article blockquote { border-left: 3px solid var(--blue); padding-left: 1rem; margin: 1.5rem 0; color: var(--gray-5); font-style: italic; }
+    .article .meta { color: var(--gray-5); font-size: 0.85rem; margin-bottom: 2rem; }
+    .article .tag { display: inline-block; background: var(--blue-lt); border: 1px solid rgba(30,64,175,0.15); color: var(--blue); padding: 0.15rem 0.6rem; border-radius: 9999px; font-size: 0.72rem; font-weight: 500; margin-right: 0.3rem; }
+    .article .callout { background: var(--blue-lt); border: 1px solid rgba(30,64,175,0.15); border-radius: 8px; padding: 1rem 1.25rem; margin: 1.5rem 0; }
+    .article .callout-title { color: var(--blue); font-family: 'Sora', sans-serif; font-weight: 600; font-size: 0.85rem; margin-bottom: 0.5rem; }
+    .back-link { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--blue); font-size: 0.85rem; text-decoration: none; margin-bottom: 2rem; }
+    .back-link:hover { color: var(--blue-md); }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; margin: 1.5rem 0 2.5rem; }
+    .stat-card { background: var(--gray-1); border: 1px solid var(--gray-3); border-radius: 8px; padding: 1rem; text-align: center; }
+    .stat-card .stat-num { font-family: 'Sora', sans-serif; color: var(--blue); font-size: 1.5rem; font-weight: 700; }
+    .stat-card .stat-label { color: var(--gray-5); font-size: 0.72rem; margin-top: 0.25rem; }
+    .cta-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.65rem 1.25rem; border: 1px solid var(--blue); border-radius: 8px; color: var(--blue); text-decoration: none; font-family: 'Sora', sans-serif; font-size: 0.85rem; font-weight: 600; transition: all 0.15s; }
+    .cta-btn:hover { background: var(--blue-lt); text-decoration: none; }
     @media (max-width: 640px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
   </style>
 </head>
-<body class="text-gray-100">
+<body>
 
-<div class="article">
+<nav class="topnav">
+  <a href="/full" class="topnav-back">← Portfolio</a>
+  <span class="topnav-name">Jonathan Aerts</span>
+  <div class="topnav-links">
+    <a href="https://linkedin.com/in/jaerts085/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+    <a href="https://github.com/John6810" target="_blank" rel="noopener noreferrer">GitHub</a>
+  </div>
+</nav>
+
+<main class="article">
 
   <a href="/full#cloud-architecture" class="back-link">← Back to portfolio</a>
 
   <h1>Building 35 Terraform Modules for an Azure Landing Zone</h1>
-  <p class="meta">Jonathan Aerts · April 2026 · 8 min read</p>
+  <p class="meta">Jonathan Aerts &middot; April 2026 &middot; 8 min read</p>
   <div style="margin-bottom: 2rem;">
     <span class="tag">Terraform</span>
     <span class="tag">Azure</span>
@@ -121,7 +134,6 @@ const code7 = `lifecycle {
     <div class="stat-card"><div class="stat-num">0</div><div class="stat-label">Public endpoints</div></div>
   </div>
 
-  <!-- INTRO -->
   <h2>Why Build From Scratch?</h2>
 
   <p>When I started building our Azure Landing Zone at POST Luxembourg, the obvious question was: <em>why not just use the Azure Verified Modules (AVM) directly?</em></p>
@@ -129,32 +141,30 @@ const code7 = `lifecycle {
   <p>Three reasons forced my hand:</p>
 
   <ul>
-    <li><strong>Terragrunt cache limitation</strong> — Terragrunt copies only the module folder into its cache. Child module calls (<code>module "kv" &#123; source = "../KeyVault" &#125;</code>) break because siblings aren't accessible. Stack modules like <code>KeyVaultStack</code> had to use resource blocks directly, duplicating patterns instead of composing modules.</li>
-    <li><strong>Azure Policy Deny on subnets without NSG</strong> — The standard <code>azurerm_subnet</code> + <code>azurerm_subnet_network_security_group_association</code> two-step approach is blocked by policy. I had to use <code>azapi_resource</code> to create subnet + NSG atomically in a single ARM API call.</li>
-    <li><strong>AVM modules are massive</strong> — The AVM AKS module alone has hundreds of variables. For a Landing Zone where you control the entire stack, custom modules with opinionated defaults (private by default, RBAC by default, purge protection by default) are faster to deploy and easier to maintain.</li>
+    <li><strong>Terragrunt cache limitation</strong> &mdash; Terragrunt copies only the module folder into its cache. Child module calls (<code>module "kv" &#123; source = "../KeyVault" &#125;</code>) break because siblings aren't accessible. Stack modules like <code>KeyVaultStack</code> had to use resource blocks directly, duplicating patterns instead of composing modules.</li>
+    <li><strong>Azure Policy Deny on subnets without NSG</strong> &mdash; The standard <code>azurerm_subnet</code> + <code>azurerm_subnet_network_security_group_association</code> two-step approach is blocked by policy. I had to use <code>azapi_resource</code> to create subnet + NSG atomically in a single ARM API call.</li>
+    <li><strong>AVM modules are massive</strong> &mdash; The AVM AKS module alone has hundreds of variables. For a Landing Zone where you control the entire stack, custom modules with opinionated defaults (private by default, RBAC by default, purge protection by default) are faster to deploy and easier to maintain.</li>
   </ul>
 
-  <p>So I took the <strong>patterns</strong> from AVM — not the modules themselves — and built 35 focused modules tailored to our architecture.</p>
+  <p>So I took the <strong>patterns</strong> from AVM &mdash; not the modules themselves &mdash; and built 35 focused modules tailored to our architecture.</p>
 
-  <!-- ARCHITECTURE -->
   <h2>The Architecture</h2>
 
   <p>Hub-and-spoke with Palo Alto VM-Series as the Network Virtual Appliance (NVA). Two environments (prod/nprd) sharing the same subscriptions with IP isolation:</p>
 
   <ul>
-    <li><strong>Prod:</strong> <code>10.238.0.0/16</code> — workloads in the first 200 /24 blocks, platform in 200-255</li>
-    <li><strong>Nprd:</strong> <code>10.239.0.0/16</code> — same layout, different supernet</li>
+    <li><strong>Prod:</strong> <code>10.238.0.0/16</code> &mdash; workloads in the first 200 /24 blocks, platform in 200-255</li>
+    <li><strong>Nprd:</strong> <code>10.239.0.0/16</code> &mdash; same layout, different supernet</li>
     <li><strong>5 subscriptions:</strong> Management, Connectivity, Identity, Security, ApiManager (first corporate workload)</li>
   </ul>
 
-  <p>Every spoke routes <code>0.0.0.0/0</code> through the Palo Alto ILB frontend IP via User Defined Routes. No resource has a public endpoint — Private Endpoints everywhere, Private DNS Zones managed by ALZ DINE policies.</p>
+  <p>Every spoke routes <code>0.0.0.0/0</code> through the Palo Alto ILB frontend IP via User Defined Routes. No resource has a public endpoint &mdash; Private Endpoints everywhere, Private DNS Zones managed by ALZ DINE policies.</p>
 
   <div class="callout">
     <div class="callout-title">Architecture Pattern</div>
-    <p style="margin:0; font-size: 0.9rem;">Spoke VNet → UDR (0.0.0.0/0) → Palo Alto ILB (HA ports) → VM-Series firewall → NAT Gateway (outbound) or trust interface (east-west)</p>
+    <p style="margin:0; font-size: 0.9rem;">Spoke VNet &rarr; UDR (0.0.0.0/0) &rarr; Palo Alto ILB (HA ports) &rarr; VM-Series firewall &rarr; NAT Gateway (outbound) or trust interface (east-west)</p>
   </div>
 
-  <!-- WAR STORIES -->
   <h2>War Stories</h2>
 
   <h3>1. Azure Policy Forced Me to Use azapi</h3>
@@ -169,7 +179,7 @@ const code7 = `lifecycle {
 
   <h3>2. KMS v2 Doesn't Work in azurerm v4</h3>
 
-  <p>AKS supports KMS v2 for etcd encryption with a Key Vault key. But when combined with API Server VNet Integration (which puts the API server on a dedicated subnet), <code>azurerm</code> v4 <a href="https://github.com/hashicorp/terraform-provider-azurerm/issues/27640">doesn't support the full configuration</a>.</p>
+  <p>AKS supports KMS v2 for etcd encryption with a Key Vault key. But when combined with API Server VNet Integration, <code>azurerm</code> v4 <a href="https://github.com/hashicorp/terraform-provider-azurerm/issues/27640">doesn't support the full configuration</a>.</p>
 
   <p>The solution: create the AKS cluster via Terraform, then enable KMS + VNet Integration via <code>az aks update</code> post-creation. The lifecycle block protects the settings from drift:</p>
 
@@ -183,7 +193,7 @@ const code7 = `lifecycle {
 
   <pre><code>{code3}</code></pre>
 
-  <p>My initial implementation passed the <strong>ARM resource ID</strong> (<code>/subscriptions/.../storageAccounts/mystorageacct</code>) instead of the <strong>account name</strong>. PAN-OS doesn't validate the format — it just silently fails to connect and boots without configuration. The firewall comes up, looks healthy, but has no policies.</p>
+  <p>My initial implementation passed the <strong>ARM resource ID</strong> (<code>/subscriptions/.../storageAccounts/mystorageacct</code>) instead of the <strong>account name</strong>. PAN-OS doesn't validate the format &mdash; it just silently fails to connect and boots without configuration. The firewall comes up, looks healthy, but has no policies.</p>
 
   <p>Caught it during testing. Fixed the variable from <code>bootstrap_storage_account_id</code> to <code>bootstrap_storage_account_name</code>. Also switched the separator from <code>\n</code> to <code>;</code> to match the official Palo Alto reference architecture.</p>
 
@@ -193,18 +203,15 @@ const code7 = `lifecycle {
 
   <pre><code>{code4}</code></pre>
 
-  <p>The official Palo Alto module enables accelerated networking on all dataplane interfaces by default. It enables DPDK (Data Plane Development Kit) mode in PAN-OS, which bypasses the Azure virtual switch and gives the firewall direct access to the physical NIC. The management NIC must <em>not</em> have it — explicitly set to <code>false</code>.</p>
+  <p>The official Palo Alto module enables accelerated networking on all dataplane interfaces by default. It enables DPDK mode in PAN-OS, which bypasses the Azure virtual switch and gives the firewall direct access to the physical NIC. The management NIC must <em>not</em> have it &mdash; explicitly set to <code>false</code>.</p>
 
-  <p>Palo Alto's own documentation recommends it. The official Terraform module enforces it. But if you build your own module and forget it, you lose half your firewall throughput with no error message.</p>
-
-  <!-- PATTERNS -->
   <h2>AVM Patterns That Actually Matter</h2>
 
   <p>After aligning all 35 modules with Azure Verified Modules patterns, here are the ones that made a real difference:</p>
 
   <h3>map(object) instead of list(object)</h3>
 
-  <p>This is the single most impactful pattern change. With <code>list(object)</code>, Terraform builds <code>for_each</code> keys from values — which can be unknown at plan time if a value comes from another module's output. With <code>map(object)</code> and arbitrary string keys, the keys are always known:</p>
+  <p>This is the single most impactful pattern change. With <code>list(object)</code>, Terraform builds <code>for_each</code> keys from values &mdash; which can be unknown at plan time. With <code>map(object)</code> and arbitrary string keys, the keys are always known:</p>
 
   <pre><code>{code5}</code></pre>
 
@@ -218,15 +225,15 @@ const code7 = `lifecycle {
 
   <h3>prevent_destroy on everything that matters</h3>
 
-  <p>I learned this the hard way (not in production, thankfully). Every resource that would cause significant damage if accidentally destroyed gets <code>lifecycle &#123; prevent_destroy = true &#125;</code>:</p>
+  <p>Every resource that would cause significant damage if accidentally destroyed gets <code>lifecycle &#123; prevent_destroy = true &#125;</code>:</p>
 
   <ul>
-    <li>Key Vaults (secrets, CMK keys — purge protection helps but state gets out of sync)</li>
-    <li>AKS clusters (workloads, persistent volumes — hours to recreate)</li>
+    <li>Key Vaults (secrets, CMK keys)</li>
+    <li>AKS clusters (workloads, persistent volumes &mdash; hours to recreate)</li>
     <li>Container Registry (all container images)</li>
-    <li>DDoS Protection Plan (~€2,944/month — accidental recreation is expensive)</li>
+    <li>DDoS Protection Plan (~&euro;2,944/month)</li>
     <li>Storage Accounts (state files, backups, FinOps data)</li>
-    <li>Palo Alto VMs + their KV + encryption keys (firewall infra is the hardest to rebuild)</li>
+    <li>Palo Alto VMs + their KV + encryption keys</li>
   </ul>
 
   <h3>Private Endpoint lifecycle ignore</h3>
@@ -235,32 +242,29 @@ const code7 = `lifecycle {
 
   <pre><code>{code7}</code></pre>
 
-  <p>Why? ALZ deploys a DINE (Deploy If Not Exists) policy that automatically creates a <code>deployedByPolicy</code> DNS zone group on every Private Endpoint. If Terraform manages the DNS zone group too, they fight — Terraform removes the policy-created one, the policy recreates it, infinite loop. The <code>ignore_changes</code> lets both coexist peacefully.</p>
+  <p>ALZ deploys a DINE policy that automatically creates a DNS zone group on every Private Endpoint. If Terraform manages it too, they fight. The <code>ignore_changes</code> lets both coexist.</p>
 
-  <!-- RESULT -->
   <h2>The Result</h2>
 
-  <p>35 modules. Zero public endpoints. Dual environment. Every module validated with regex on naming vars, <code>nullable = false</code> on required inputs, <code>output &quot;resource&quot;</code> for the complete object. Reviewed by two independent experts (Azure Architect + Palo Alto Security Architect) — all critical and high findings resolved.</p>
+  <p>35 modules. Zero public endpoints. Dual environment. Every module validated with regex on naming vars, <code>nullable = false</code> on required inputs, <code>output &quot;resource&quot;</code> for the complete object. Reviewed by two independent experts (Azure Architect + Palo Alto Security Architect) &mdash; all critical and high findings resolved.</p>
 
   <p>The full module library is open source:</p>
 
   <div style="text-align: center; margin: 2rem 0;">
-    <a href="https://github.com/John6810/terraform-azurerm-modules" target="_blank" rel="noopener noreferrer"
-       style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; border: 1px solid rgba(0, 245, 255, 0.4); border-radius: 8px; color: #00F5FF; text-decoration: none; font-family: 'Orbitron', sans-serif; font-size: 0.9rem;">
-      View on GitHub →
+    <a href="https://github.com/John6810/terraform-azurerm-modules" target="_blank" rel="noopener noreferrer" class="cta-btn">
+      View on GitHub &rarr;
     </a>
   </div>
 
   <blockquote>This isn't a PoC or a lab project. It's a production landing zone for a national telecom operator, built to run real workloads behind real firewalls with real compliance requirements.</blockquote>
 
-  <!-- FOOTER -->
-  <div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid rgba(0, 245, 255, 0.1); text-align: center;">
-    <p style="color: #6b7280; font-size: 0.85rem;">
-      Jonathan Aerts · Cloud Solutions Architect · <a href="https://linkedin.com/in/jaerts085/" target="_blank" rel="noopener noreferrer">LinkedIn</a> · <a href="https://github.com/John6810" target="_blank" rel="noopener noreferrer">GitHub</a> · <a href="/full">Full Portfolio</a>
+  <div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--gray-3); text-align: center;">
+    <p style="color: var(--gray-5); font-size: 0.85rem;">
+      Jonathan Aerts &middot; Cloud Solutions Architect &middot; <a href="https://linkedin.com/in/jaerts085/" target="_blank" rel="noopener noreferrer">LinkedIn</a> &middot; <a href="https://github.com/John6810" target="_blank" rel="noopener noreferrer">GitHub</a> &middot; <a href="/full">Full Portfolio</a>
     </p>
   </div>
 
-</div>
+</main>
 
 <Analytics />
 </body>
