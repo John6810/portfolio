@@ -1,0 +1,131 @@
+---
+---
+<section id="cloud-architecture" class="py-20 relative">
+  <div class="container mx-auto px-6">
+    <h2 class="section-title" data-i18n="section_cloud">Cloud Architecture — Azure Landing Zone</h2>
+    <p class="text-gray-400 mb-8" data-i18n="cloud_intro">Enterprise-grade Azure Landing Zone built from scratch with 35 Terraform modules.</p>
+
+    <!-- Architecture Overview -->
+    <div class="card mb-8 border-cyan-500/30">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="text-2xl">🏗️</span>
+        <h3 class="font-[Orbitron] text-cyan-400 text-sm" data-i18n="cloud_overview_title">Architecture Overview</h3>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <p class="text-gray-300 text-sm mb-4" data-i18n="cloud_overview_desc">Hub-and-spoke topology with Palo Alto VM-Series NVA, dual environments (prod/nprd), and full Azure Landing Zone governance via ALZ policies.</p>
+          <div class="space-y-2 text-sm">
+            <div class="flex items-center gap-2"><span class="text-cyan-400">▸</span> <span data-i18n="cloud_arch_1">Hub-and-Spoke with Palo Alto NVA (ILB HA ports)</span></div>
+            <div class="flex items-center gap-2"><span class="text-cyan-400">▸</span> <span data-i18n="cloud_arch_2">vWAN integration for hybrid connectivity</span></div>
+            <div class="flex items-center gap-2"><span class="text-cyan-400">▸</span> <span data-i18n="cloud_arch_3">Private AKS cluster (CNI Overlay, KMS v2, OIDC/WI)</span></div>
+            <div class="flex items-center gap-2"><span class="text-cyan-400">▸</span> <span data-i18n="cloud_arch_4">Full ALZ governance (DINE policies, Defender, DDoS)</span></div>
+            <div class="flex items-center gap-2"><span class="text-cyan-400">▸</span> <span data-i18n="cloud_arch_5">Prometheus + Grafana monitoring stack</span></div>
+            <div class="flex items-center gap-2"><span class="text-cyan-400">▸</span> <span data-i18n="cloud_arch_6">Private DNS Zones + AMPLS for zero public exposure</span></div>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div class="bg-cyan-500/5 border border-cyan-500/20 rounded-lg p-3 text-center">
+            <div class="font-[Orbitron] text-cyan-400 text-2xl font-bold">35</div>
+            <div class="text-gray-400 text-xs" data-i18n="cloud_stat_modules">Terraform modules</div>
+          </div>
+          <div class="bg-cyan-500/5 border border-cyan-500/20 rounded-lg p-3 text-center">
+            <div class="font-[Orbitron] text-cyan-400 text-2xl font-bold">2</div>
+            <div class="text-gray-400 text-xs" data-i18n="cloud_stat_envs">Environments (prod/nprd)</div>
+          </div>
+          <div class="bg-cyan-500/5 border border-cyan-500/20 rounded-lg p-3 text-center">
+            <div class="font-[Orbitron] text-cyan-400 text-2xl font-bold">5</div>
+            <div class="text-gray-400 text-xs" data-i18n="cloud_stat_subs">Subscriptions</div>
+          </div>
+          <div class="bg-cyan-500/5 border border-cyan-500/20 rounded-lg p-3 text-center">
+            <div class="font-[Orbitron] text-cyan-400 text-2xl font-bold">0</div>
+            <div class="text-gray-400 text-xs" data-i18n="cloud_stat_public">Public endpoints</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Key Design Decisions -->
+    <h3 class="font-[Orbitron] text-cyan-400 text-sm mb-4 uppercase tracking-widest" data-i18n="cloud_decisions_title">Key Design Decisions</h3>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+
+      <div class="card">
+        <div class="flex items-center gap-3 mb-3">
+          <span class="text-2xl">🔥</span>
+          <h3 class="font-[Orbitron] text-cyan-400 text-sm" data-i18n="cloud_palo_title">Palo Alto VM-Series</h3>
+        </div>
+        <p class="text-gray-400 text-sm mb-4" data-i18n="cloud_palo_desc">HA cluster with ILB (HA ports), accelerated networking on dataplane, CMK double encryption, Application Insights monitoring. Aligned with official Palo Alto reference architecture.</p>
+        <div class="flex flex-wrap gap-2">
+          <span class="tag">Palo Alto</span><span class="tag">ILB</span><span class="tag">HA Ports</span>
+          <span class="tag">CMK</span><span class="tag">DPDK</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="flex items-center gap-3 mb-3">
+          <span class="text-2xl">☸️</span>
+          <h3 class="font-[Orbitron] text-cyan-400 text-sm" data-i18n="cloud_aks_title">Private AKS</h3>
+        </div>
+        <p class="text-gray-400 text-sm mb-4" data-i18n="cloud_aks_desc">Private cluster with Azure CNI Overlay, KMS v2 etcd encryption, OIDC/Workload Identity, Defender, managed Prometheus, Azure Policy add-on. Zero public FQDN.</p>
+        <div class="flex flex-wrap gap-2">
+          <span class="tag">AKS</span><span class="tag">KMS v2</span><span class="tag">OIDC</span>
+          <span class="tag">Prometheus</span><span class="tag">Private</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="flex items-center gap-3 mb-3">
+          <span class="text-2xl">🛡️</span>
+          <h3 class="font-[Orbitron] text-cyan-400 text-sm" data-i18n="cloud_security_title">Security by Default</h3>
+        </div>
+        <p class="text-gray-400 text-sm mb-4" data-i18n="cloud_security_desc">All modules default to private access, TLS 1.2, RBAC authorization, purge protection, prevent_destroy on critical resources. Private Endpoints everywhere.</p>
+        <div class="flex flex-wrap gap-2">
+          <span class="tag">Private Endpoints</span><span class="tag">RBAC</span>
+          <span class="tag">PIM</span><span class="tag">prevent_destroy</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Terraform Module Patterns -->
+    <h3 class="font-[Orbitron] text-cyan-400 text-sm mb-4 uppercase tracking-widest" data-i18n="cloud_patterns_title">AVM-Aligned Module Patterns</h3>
+    <div class="card mb-10">
+      <div class="grid md:grid-cols-2 gap-x-8 gap-y-2 text-sm">
+        <div class="flex items-center gap-2 py-1 border-b border-cyan-500/10"><span class="text-cyan-400 font-mono">map(object)</span> <span class="text-gray-400" data-i18n="cloud_pat_map">for all collections (plan-time safe)</span></div>
+        <div class="flex items-center gap-2 py-1 border-b border-cyan-500/10"><span class="text-cyan-400 font-mono">strcontains()</span> <span class="text-gray-400" data-i18n="cloud_pat_role">auto-detect role ID vs name</span></div>
+        <div class="flex items-center gap-2 py-1 border-b border-cyan-500/10"><span class="text-cyan-400 font-mono">lock {}</span> <span class="text-gray-400" data-i18n="cloud_pat_lock">CanNotDelete / ReadOnly on all modules</span></div>
+        <div class="flex items-center gap-2 py-1 border-b border-cyan-500/10"><span class="text-cyan-400 font-mono">nullable = false</span> <span class="text-gray-400" data-i18n="cloud_pat_null">enforced on all required vars</span></div>
+        <div class="flex items-center gap-2 py-1 border-b border-cyan-500/10"><span class="text-cyan-400 font-mono">validation {}</span> <span class="text-gray-400" data-i18n="cloud_pat_valid">regex + contains on all inputs</span></div>
+        <div class="flex items-center gap-2 py-1 border-b border-cyan-500/10"><span class="text-cyan-400 font-mono">output "resource"</span> <span class="text-gray-400" data-i18n="cloud_pat_output">complete object on every module</span></div>
+      </div>
+    </div>
+
+    <!-- Module Grid -->
+    <h3 class="font-[Orbitron] text-cyan-400 text-sm mb-4 uppercase tracking-widest" data-i18n="cloud_modules_title">35 Modules</h3>
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 mb-8">
+      <div class="card text-center p-3"><div class="text-xl mb-1">🌐</div><div class="font-[Orbitron] text-cyan-400 text-xs">Vnet</div></div>
+      <div class="card text-center p-3"><div class="text-xl mb-1">🔀</div><div class="font-[Orbitron] text-cyan-400 text-xs">SubnetWithNsg</div></div>
+      <div class="card text-center p-3"><div class="text-xl mb-1">🛡️</div><div class="font-[Orbitron] text-cyan-400 text-xs">NSG</div></div>
+      <div class="card text-center p-3"><div class="text-xl mb-1">🗺️</div><div class="font-[Orbitron] text-cyan-400 text-xs">RouteTable</div></div>
+      <div class="card text-center p-3"><div class="text-xl mb-1">🔗</div><div class="font-[Orbitron] text-cyan-400 text-xs">VNetPeering</div></div>
+      <div class="card text-center p-3"><div class="text-xl mb-1">🚪</div><div class="font-[Orbitron] text-cyan-400 text-xs">NatGateway</div></div>
+      <div class="card text-center p-3"><div class="text-xl mb-1">📡</div><div class="font-[Orbitron] text-cyan-400 text-xs">DnsResolver</div></div>
+      <div class="card text-center p-3"><div class="text-xl mb-1">🔒</div><div class="font-[Orbitron] text-cyan-400 text-xs">PrivateEndpoint</div></div>
+      <div class="card text-center p-3"><div class="text-xl mb-1">🔑</div><div class="font-[Orbitron] text-cyan-400 text-xs">KeyVault</div></div>
+      <div class="card text-center p-3"><div class="text-xl mb-1">☸️</div><div class="font-[Orbitron] text-cyan-400 text-xs">AKS</div></div>
+      <div class="card text-center p-3"><div class="text-xl mb-1">📦</div><div class="font-[Orbitron] text-cyan-400 text-xs">ACR</div></div>
+      <div class="card text-center p-3"><div class="text-xl mb-1">🔥</div><div class="font-[Orbitron] text-cyan-400 text-xs">PaloCluster</div></div>
+      <div class="card text-center p-3"><div class="text-xl mb-1">📊</div><div class="font-[Orbitron] text-cyan-400 text-xs">Grafana</div></div>
+      <div class="card text-center p-3"><div class="text-xl mb-1">📈</div><div class="font-[Orbitron] text-cyan-400 text-xs">Prometheus</div></div>
+      <div class="card text-center p-3"><div class="text-xl mb-1">🏛️</div><div class="font-[Orbitron] text-cyan-400 text-xs">ALZ</div></div>
+    </div>
+
+    <!-- GitHub CTA -->
+    <div class="text-center">
+      <a href="https://github.com/John6810/terraform-azurerm-modules" target="_blank" rel="noopener noreferrer"
+         class="inline-flex items-center gap-2 px-6 py-3 border border-cyan-500/40 rounded-lg text-cyan-400 hover:bg-cyan-500/10 transition-all font-[Orbitron] text-sm">
+        <span>gh</span> <span data-i18n="cloud_github_cta">View all 35 modules on GitHub</span> →
+      </a>
+    </div>
+
+  </div>
+</section>
