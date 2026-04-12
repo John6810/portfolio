@@ -122,7 +122,7 @@ export const T: TranslationMap = {
     // Cloud Architecture Section
     nav_cloud: "Cloud Archi",
     section_cloud: "Cloud Architecture — Azure Landing Zone",
-    cloud_intro: "Landing Zone Azure enterprise-grade construite from scratch avec 35 modules Terraform.",
+    cloud_intro: "Landing Zone Azure enterprise-grade construite from scratch avec 42 modules Terraform.",
     cloud_overview_title: "Vue d'ensemble de l'architecture",
     cloud_overview_desc: "Topologie hub-and-spoke avec Palo Alto VM-Series NVA, double environnement (prod/nprd), et gouvernance complète via les policies Azure Landing Zone.",
     cloud_arch_1: "Hub-and-Spoke avec Palo Alto NVA (ILB HA ports)",
@@ -149,8 +149,8 @@ export const T: TranslationMap = {
     cloud_pat_null: "imposé sur toutes les variables requises",
     cloud_pat_valid: "regex + contains sur tous les inputs",
     cloud_pat_output: "objet complet sur chaque module",
-    cloud_modules_title: "35 Modules",
-    cloud_github_cta: "Voir les 35 modules sur GitHub",
+    cloud_modules_title: "42 Modules",
+    cloud_github_cta: "Voir les 42 modules sur GitHub",
   },
 
   en: {
@@ -272,7 +272,7 @@ export const T: TranslationMap = {
     // Cloud Architecture Section
     nav_cloud: "Cloud Archi",
     section_cloud: "Cloud Architecture — Azure Landing Zone",
-    cloud_intro: "Enterprise-grade Azure Landing Zone built from scratch with 35 Terraform modules.",
+    cloud_intro: "Enterprise-grade Azure Landing Zone built from scratch with 42 Terraform modules.",
     cloud_overview_title: "Architecture Overview",
     cloud_overview_desc: "Hub-and-spoke topology with Palo Alto VM-Series NVA, dual environments (prod/nprd), and full Azure Landing Zone governance via ALZ policies.",
     cloud_arch_1: "Hub-and-Spoke with Palo Alto NVA (ILB HA ports)",
@@ -299,8 +299,8 @@ export const T: TranslationMap = {
     cloud_pat_null: "enforced on all required vars",
     cloud_pat_valid: "regex + contains on all inputs",
     cloud_pat_output: "complete object on every module",
-    cloud_modules_title: "35 Modules",
-    cloud_github_cta: "View all 35 modules on GitHub",
+    cloud_modules_title: "42 Modules",
+    cloud_github_cta: "View all 42 modules on GitHub",
   },
 
   jp: {
@@ -422,7 +422,7 @@ export const T: TranslationMap = {
     // Cloud Architecture Section
     nav_cloud: "クラウド設計",
     section_cloud: "クラウドアーキテクチャ — Azure Landing Zone",
-    cloud_intro: "35のTerraformモジュールでゼロから構築したエンタープライズ級Azure Landing Zone。",
+    cloud_intro: "42のTerraformモジュールでゼロから構築したエンタープライズ級Azure Landing Zone。",
     cloud_overview_title: "アーキテクチャ概要",
     cloud_overview_desc: "Palo Alto VM-Series NVAによるハブ&スポーク構成、デュアル環境（prod/nprd）、ALZポリシーによる完全なガバナンス。",
     cloud_arch_1: "Palo Alto NVAによるハブ&スポーク（ILB HAポート）",
@@ -449,7 +449,7 @@ export const T: TranslationMap = {
     cloud_pat_null: "全必須変数に適用",
     cloud_pat_valid: "全入力にregex + contains",
     cloud_pat_output: "全モジュールに完全オブジェクト",
-    cloud_modules_title: "35モジュール",
-    cloud_github_cta: "GitHubで35モジュールを見る",
+    cloud_modules_title: "42モジュール",
+    cloud_github_cta: "GitHubで42モジュールを見る",
   },
 };

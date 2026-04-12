@@ -3,7 +3,7 @@
 <section id="cloud-architecture" class="py-20 relative">
   <div class="container mx-auto px-6">
     <h2 class="section-title" data-i18n="section_cloud">Cloud Architecture — Azure Landing Zone</h2>
-    <p class="text-gray-400 mb-8" data-i18n="cloud_intro">Enterprise-grade Azure Landing Zone built from scratch with 35 Terraform modules.</p>
+    <p class="text-gray-400 mb-8" data-i18n="cloud_intro">Enterprise-grade Azure Landing Zone built from scratch with 42 Terraform modules.</p>
 
     <!-- Architecture Overview -->
     <div class="card mb-8 border-cyan-500/30">
@@ -25,7 +25,7 @@
         </div>
         <div class="grid grid-cols-2 gap-3">
           <div class="bg-cyan-500/5 border border-cyan-500/20 rounded-lg p-3 text-center">
-            <div class="font-[Orbitron] text-cyan-400 text-2xl font-bold">35</div>
+            <div class="font-[Orbitron] text-cyan-400 text-2xl font-bold">42</div>
             <div class="text-gray-400 text-xs" data-i18n="cloud_stat_modules">Terraform modules</div>
           </div>
           <div class="bg-cyan-500/5 border border-cyan-500/20 rounded-lg p-3 text-center">
@@ -100,8 +100,9 @@
     </div>
 
     <!-- Module Grid -->
-    <h3 class="font-[Orbitron] text-cyan-400 text-sm mb-4 uppercase tracking-widest" data-i18n="cloud_modules_title">35 Modules</h3>
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 mb-8">
+    <h3 class="font-[Orbitron] text-cyan-400 text-sm mb-4 uppercase tracking-widest" data-i18n="cloud_modules_title">42 Modules</h3>
+    <div class="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-3 mb-8">
+      <!-- Core Infrastructure -->
       <div class="card text-center p-3"><div class="text-xl mb-1">🌐</div><div class="font-[Orbitron] text-cyan-400 text-xs">Vnet</div></div>
       <div class="card text-center p-3"><div class="text-xl mb-1">🔀</div><div class="font-[Orbitron] text-cyan-400 text-xs">SubnetWithNsg</div></div>
       <div class="card text-center p-3"><div class="text-xl mb-1">🛡️</div><div class="font-[Orbitron] text-cyan-400 text-xs">NSG</div></div>
@@ -109,21 +110,47 @@
       <div class="card text-center p-3"><div class="text-xl mb-1">🔗</div><div class="font-[Orbitron] text-cyan-400 text-xs">VNetPeering</div></div>
       <div class="card text-center p-3"><div class="text-xl mb-1">🚪</div><div class="font-[Orbitron] text-cyan-400 text-xs">NatGateway</div></div>
       <div class="card text-center p-3"><div class="text-xl mb-1">📡</div><div class="font-[Orbitron] text-cyan-400 text-xs">DnsResolver</div></div>
+      <div class="card text-center p-3"><div class="text-xl mb-1">🌍</div><div class="font-[Orbitron] text-cyan-400 text-xs">PrivateDnsZones</div></div>
       <div class="card text-center p-3"><div class="text-xl mb-1">🔒</div><div class="font-[Orbitron] text-cyan-400 text-xs">PrivateEndpoint</div></div>
-      <div class="card text-center p-3"><div class="text-xl mb-1">🔑</div><div class="font-[Orbitron] text-cyan-400 text-xs">KeyVault</div></div>
+      <div class="card text-center p-3"><div class="text-xl mb-1">👁️</div><div class="font-[Orbitron] text-cyan-400 text-xs">NetworkWatcher</div></div>
+      <div class="card text-center p-3"><div class="text-xl mb-1">🛑</div><div class="font-[Orbitron] text-cyan-400 text-xs">DdosProtection</div></div>
+      <!-- Compute & Containers -->
       <div class="card text-center p-3"><div class="text-xl mb-1">☸️</div><div class="font-[Orbitron] text-cyan-400 text-xs">AKS</div></div>
       <div class="card text-center p-3"><div class="text-xl mb-1">📦</div><div class="font-[Orbitron] text-cyan-400 text-xs">ACR</div></div>
+      <div class="card text-center p-3"><div class="text-xl mb-1">🚀</div><div class="font-[Orbitron] text-cyan-400 text-xs">AppGateway</div></div>
+      <!-- Security & Identity -->
+      <div class="card text-center p-3"><div class="text-xl mb-1">🔑</div><div class="font-[Orbitron] text-cyan-400 text-xs">KeyVault</div></div>
+      <div class="card text-center p-3"><div class="text-xl mb-1">🗝️</div><div class="font-[Orbitron] text-cyan-400 text-xs">KeyVault-Key</div></div>
+      <div class="card text-center p-3"><div class="text-xl mb-1">🏗️</div><div class="font-[Orbitron] text-cyan-400 text-xs">KeyVaultStack</div></div>
+      <div class="card text-center p-3"><div class="text-xl mb-1">🔐</div><div class="font-[Orbitron] text-cyan-400 text-xs">HSM</div></div>
+      <div class="card text-center p-3"><div class="text-xl mb-1">👤</div><div class="font-[Orbitron] text-cyan-400 text-xs">ManagedIdentity</div></div>
+      <div class="card text-center p-3"><div class="text-xl mb-1">🎫</div><div class="font-[Orbitron] text-cyan-400 text-xs">RBAC</div></div>
+      <!-- Network Security -->
       <div class="card text-center p-3"><div class="text-xl mb-1">🔥</div><div class="font-[Orbitron] text-cyan-400 text-xs">PaloCluster</div></div>
-      <div class="card text-center p-3"><div class="text-xl mb-1">📊</div><div class="font-[Orbitron] text-cyan-400 text-xs">Grafana</div></div>
+      <div class="card text-center p-3"><div class="text-xl mb-1">🔌</div><div class="font-[Orbitron] text-cyan-400 text-xs">VPN</div></div>
+      <div class="card text-center p-3"><div class="text-xl mb-1">🌐</div><div class="font-[Orbitron] text-cyan-400 text-xs">vWAN</div></div>
+      <!-- Monitoring & Governance -->
+      <div class="card text-center p-3"><div class="text-xl mb-1">📊</div><div class="font-[Orbitron] text-cyan-400 text-xs">MonitorWS</div></div>
       <div class="card text-center p-3"><div class="text-xl mb-1">📈</div><div class="font-[Orbitron] text-cyan-400 text-xs">Prometheus</div></div>
-      <div class="card text-center p-3"><div class="text-xl mb-1">🏛️</div><div class="font-[Orbitron] text-cyan-400 text-xs">ALZ</div></div>
+      <div class="card text-center p-3"><div class="text-xl mb-1">📉</div><div class="font-[Orbitron] text-cyan-400 text-xs">Grafana</div></div>
+      <div class="card text-center p-3"><div class="text-xl mb-1">🔔</div><div class="font-[Orbitron] text-cyan-400 text-xs">ActionGroup</div></div>
+      <div class="card text-center p-3"><div class="text-xl mb-1">🩺</div><div class="font-[Orbitron] text-cyan-400 text-xs">DiagSettings</div></div>
+      <div class="card text-center p-3"><div class="text-xl mb-1">🔗</div><div class="font-[Orbitron] text-cyan-400 text-xs">AMPLS</div></div>
+      <div class="card text-center p-3"><div class="text-xl mb-1">💰</div><div class="font-[Orbitron] text-cyan-400 text-xs">FinOpsHub</div></div>
+      <!-- Platform -->
+      <div class="card text-center p-3"><div class="text-xl mb-1">🏛️</div><div class="font-[Orbitron] text-cyan-400 text-xs">ALZ Archi</div></div>
+      <div class="card text-center p-3"><div class="text-xl mb-1">⚙️</div><div class="font-[Orbitron] text-cyan-400 text-xs">ALZ Mgmt</div></div>
+      <div class="card text-center p-3"><div class="text-xl mb-1">📁</div><div class="font-[Orbitron] text-cyan-400 text-xs">ResourceGroup</div></div>
+      <div class="card text-center p-3"><div class="text-xl mb-1">🔒</div><div class="font-[Orbitron] text-cyan-400 text-xs">ResourceLock</div></div>
+      <div class="card text-center p-3"><div class="text-xl mb-1">💾</div><div class="font-[Orbitron] text-cyan-400 text-xs">StorageAccount</div></div>
+      <div class="card text-center p-3"><div class="text-xl mb-1">🏷️</div><div class="font-[Orbitron] text-cyan-400 text-xs">Naming</div></div>
     </div>
 
     <!-- GitHub CTA -->
     <div class="text-center">
       <a href="https://github.com/John6810/terraform-azurerm-modules" target="_blank" rel="noopener noreferrer"
          class="inline-flex items-center gap-2 px-6 py-3 border border-cyan-500/40 rounded-lg text-cyan-400 hover:bg-cyan-500/10 transition-all font-[Orbitron] text-sm">
-        <span>gh</span> <span data-i18n="cloud_github_cta">View all 35 modules on GitHub</span> →
+        <span>gh</span> <span data-i18n="cloud_github_cta">View all 42 modules on GitHub</span> →
       </a>
     </div>
 
