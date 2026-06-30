@@ -30,6 +30,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # astro check needs the generated content JSON (search index) that
+      # SearchModal.tsx imports — produced by the json generator, not committed.
+      - name: Generate content JSON
+        run: npm run generate-json
+
       - name: Type check (astro check)
         run: npm run check
 
