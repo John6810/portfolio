@@ -1,0 +1,40 @@
+---
+import { locales, localeMeta, type Locale } from "@/lib/cv";
+
+const { current } = Astro.props as { current: Locale };
+---
+
+<div
+  class="inline-flex items-center gap-1 rounded-md border border-border bg-light p-0.5 dark:border-darkmode-border dark:bg-darkmode-body"
+  role="group"
+  aria-label="Language"
+>
+  {
+    locales.map((loc) => {
+      const m = localeMeta[loc];
+      const active = loc === current;
+      return (
+        <a
+          href={m.path}
+          hreflang={m.htmlLang}
+          aria-current={active ? "true" : undefined}
+          class={`inline-flex items-center gap-1.5 rounded px-2 py-1 text-xs font-semibold transition ${
+            active
+              ? "bg-body text-text-dark shadow-sm dark:bg-darkmode-light dark:text-darkmode-text-dark"
+              : "text-text-light hover:text-text-dark dark:hover:text-darkmode-text-dark"
+          }`}
+        >
+          <img
+            src={m.flag}
+            alt=""
+            width="16"
+            height="12"
+            class="h-3 w-4 rounded-[2px] object-cover"
+            loading="lazy"
+          />
+          {m.label}
+        </a>
+      );
+    })
+  }
+</div>

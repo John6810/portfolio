@@ -28,15 +28,16 @@ export interface Props {
   image?: string;
   noindex?: boolean;
   canonical?: string;
+  lang?: string;
 }
 
 // destructure frontmatter
-const { title, meta_title, description, image, noindex, canonical } =
+const { title, meta_title, description, image, noindex, canonical, lang } =
   Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang ? lang : "en"}>
   <head>
     <!-- google tag manager -->
     {
