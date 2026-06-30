@@ -6,6 +6,10 @@ updates:
       interval: "weekly"
       day: "monday"
     open-pull-requests-limit: 10
+    # Match pnpm's minimumReleaseAge supply-chain guard (pnpm-workspace.yaml):
+    # don't propose freshly-published versions that a frozen install would reject.
+    cooldown:
+      default-days: 7
     groups:
       astro:
         patterns: ["astro", "@astrojs/*"]
