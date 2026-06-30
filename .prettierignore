@@ -1,0 +1,7 @@
+# Generated / build artifacts — not hand-edited, don't format-gate them
+src/styles/generated-theme.css
+dist/
+.astro/
+.json/
+pnpm-lock.yaml
+package-lock.json
