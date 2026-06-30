@@ -11,6 +11,11 @@
     "cloudflare-docs": {
       "type": "http",
       "url": "https://docs.mcp.cloudflare.com/mcp"
+    },
+    "terraform": {
+      "type": "stdio",
+      "command": "C:\\Post\\MCP\\Terraform\\terraform-mcp-server.exe",
+      "args": ["stdio", "--toolsets", "registry,terraform"]
     }
   }
 }

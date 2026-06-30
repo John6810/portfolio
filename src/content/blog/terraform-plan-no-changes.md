@@ -20,7 +20,7 @@ This is the story of two safety mechanisms, each correct in isolation, that comb
 
 AVD's initial feed discovery resolves `rdweb.wvd.microsoft.com`. In a full-private setup — DNS forced through the hub resolver, a catch-all rule sending everything else to a firewall DNS proxy — that public Microsoft record can fail to resolve or get blocked outbound. The client has no feed, so it shows nothing. The error blames the user's apps; the cause is name resolution.
 
-The supported fix is architectural: deploy a private endpoint for the AVD `global` subresource on a dedicated workspace. Microsoft then CNAMEs `rdweb.wvd.microsoft.com` to a private record in `privatelink-global.wvd.microsoft.com`, and discovery stays inside the network. Clean. So you add the private endpoint and expect green.
+The supported fix is architectural: deploy a single private endpoint for the AVD `global` subresource — one for the entire tenant — on a dedicated placeholder workspace with no application groups attached. Microsoft then CNAMEs `rdweb.wvd.microsoft.com` to a private record in `privatelink-global.wvd.microsoft.com`, and discovery stays inside the network. Clean. So you add the private endpoint and expect green.
 
 It is not green. And this is where the two automations start working against you.
 
