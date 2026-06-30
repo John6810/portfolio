@@ -22,27 +22,29 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
+      - uses: pnpm/action-setup@v4
+
       - uses: actions/setup-node@v6
         with:
           node-version: 22
-          cache: npm
+          cache: pnpm
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       # astro check needs the generated content JSON (search index) that
       # SearchModal.tsx imports — produced by the json generator, not committed.
       - name: Generate content JSON
-        run: npm run generate-json
+        run: pnpm run generate-json
 
       - name: Type check (astro check)
-        run: npm run check
+        run: pnpm run check
 
       - name: Format check (Prettier)
-        run: npx prettier --check ./src
+        run: pnpm exec prettier --check ./src
 
       - name: Build
-        run: npm run build
+        run: pnpm build
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v7

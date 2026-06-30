@@ -34,19 +34,20 @@ jobs:
 
   # ── Dependency vulnerabilities in shipped (runtime) deps ──
   deps:
-    name: Dependency audit (npm)
+    name: Dependency audit
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v6
         with:
           node-version: 22
-          cache: npm
+          cache: pnpm
       - name: Install dependencies
-        run: npm ci
-      - name: Audit runtime dependencies (fail on high/critical)
-        run: npm audit --omit=dev --audit-level=high
+        run: pnpm install --frozen-lockfile
+      - name: Audit dependencies (fail on high/critical)
+        run: pnpm audit --audit-level high
 
   # ── Misconfiguration scan (Dockerfile, configs) ──
   config:
