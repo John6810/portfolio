@@ -100,7 +100,7 @@ Go from 1 to 3+ session hosts to test a `BreadthFirst` load balancing + a realis
 
 ### The new `sessionHostConfiguration` pattern
 
-Today we manage the session hosts via a VM counter + extensions. Microsoft recently GA'd the `sessionHostConfiguration` pattern (a host pool subresource) that automates create/update/scale of the VMs: no more individual extension management, automatic image update, integration with dynamic Autoscale. To check: the azurerm version that supports it.
+Today we manage the session hosts via a VM counter + extensions. Microsoft introduced the `sessionHostConfiguration` pattern (a host pool sub-resource, in preview at the time of writing) that automates create/update/scale of the VMs: no more individual extension management, automatic image update, integration with dynamic Autoscale. To check: its GA status and the azurerm version that supports it.
 
 ### Custom image (Shared Image Gallery)
 
@@ -157,7 +157,7 @@ Entra-joined session hosts can auto-enroll into Intune (policies, software deplo
 
 ### RDP Shortpath, session recording, App Attach
 
-- **RDP Shortpath** (UDP, lower latency): requires exposing UDP 3390 or going through public STUN/TURN — not very compatible with a simple full-private design. Reconsider against a real perf need.
+- **RDP Shortpath** (UDP, lower latency): Shortpath _for managed networks_ (UDP port 3390) works in a full-private design — over the private UDP path, enabled with the _Allow Direct UDP network path over Private Link_ opt-in. Only Shortpath _for public networks_ (STUN/TURN) isn't supported with Private Link. Worth enabling the managed-networks path against a real perf need.
 - **Session recording** (audit/compliance): Microsoft Purview (in preview) or third-party solutions. Not a POC priority.
 - **App Attach / MSIX**: package the business apps as MSIX and attach them dynamically to the session host rather than freezing them in the image → lighter image + app versioning.
 
