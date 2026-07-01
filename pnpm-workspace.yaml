@@ -1,6 +1,13 @@
 packages:
   - "."
 
+# Security overrides — force patched versions of transitive (build/dev-time)
+# deps flagged by Dependabot. Scoped to the vulnerable ranges only so healthy
+# majors already in the tree (js-yaml 4.x, yaml 2.9.x) are left untouched.
+overrides:
+  "js-yaml@<3.15.0": "3.15.0" # quadratic-DoS in merge keys (via gray-matter)
+  "yaml@>=2.0.0 <2.8.3": "2.8.3" # stack-overflow on nested collections (via @astrojs/check)
+
 allowBuilds:
   esbuild: true
   sharp: true
