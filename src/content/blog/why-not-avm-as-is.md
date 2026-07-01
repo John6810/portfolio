@@ -1,7 +1,7 @@
 ---
 title: "Why I Don't Use AVM Modules As-Is (And What I Do Instead)"
 meta_title: ""
-description: "How I adapted Azure Verified Modules patterns into 35 custom Terraform modules for an enterprise landing zone — and why using AVM directly wasn't an option with Terragrunt."
+description: "How I adapted Azure Verified Modules patterns into 60+ custom Terraform modules for an enterprise landing zone — and why using AVM directly wasn't an option with Terragrunt."
 date: 2026-04-08T00:00:00Z
 image: "/images/blog/why-not-avm-as-is.png"
 categories: ["Landing Zone"]
@@ -18,7 +18,7 @@ But AVM modules are designed for **broad reuse**. They need to support every pos
 
 The real value of AVM isn't the modules themselves. It's the **patterns**: how they structure variables, handle role assignments, manage locks, expose outputs. Those patterns are battle-tested and transferable. You can take them and build focused, opinionated modules that fit your architecture exactly.
 
-That's what I did. 35 custom modules, all aligned with AVM conventions, tailored to a production Azure Landing Zone at POST Luxembourg.
+That's what I did. 60+ custom modules, all aligned with AVM conventions, tailored to a production Azure Landing Zone at POST Luxembourg.
 
 ## The Terragrunt Problem
 
@@ -220,7 +220,7 @@ variable "environment" {
 }
 ```
 
-With `nullable = false`, Terraform catches the `null` at plan time with a clear message: "The value of variable X cannot be null." Applied to all 35 modules on every variable that must have a value.
+With `nullable = false`, Terraform catches the `null` at plan time with a clear message: "The value of variable X cannot be null." Applied to all 60+ modules on every variable that must have a value.
 
 ### 5. Validation Blocks Everywhere
 
@@ -312,11 +312,11 @@ The pattern: **secure by default, override explicitly**. If you want public acce
 
 ## Was It Worth It?
 
-35 modules. All consistent. Every module follows the same structure: `version.tf`, `variables.tf`, `main.tf`, `output.tf`. Every module uses the same naming convention, the same validation patterns, the same output structure.
+60+ modules. All consistent. Every module follows the same structure: `version.tf`, `variables.tf`, `main.tf`, `output.tf`. Every module uses the same naming convention, the same validation patterns, the same output structure.
 
 - **New module time:** 30 minutes following the pattern. Copy the skeleton, adapt the resource, add validations. The conventions are so established that the structure writes itself.
 - **Breaking changes:** Controlled. The `list` → `map` migration was the biggest one, affecting 12 modules. It required updating every `terragrunt.hcl` that consumed those modules. But it was a one-time cost that eliminated an entire category of plan-time errors.
-- **Review confidence:** The full library was reviewed by an Azure Architect and a Palo Alto Security Architect. No structural issues found. The consistency made review efficient — once you understand one module, you understand all 35.
+- **Review confidence:** The full library was reviewed by an Azure Architect and a Palo Alto Security Architect. No structural issues found. The consistency made review efficient — once you understand one module, you understand all 60+.
 
 > **The lesson**
 >

@@ -1,7 +1,7 @@
 ---
-title: "Building 35 Terraform Modules for an Azure Landing Zone"
+title: "Building 60+ Terraform Modules for an Azure Landing Zone"
 meta_title: ""
-description: "How I built an enterprise Azure Landing Zone from scratch with 35 custom Terraform modules aligned with Azure Verified Modules patterns, Palo Alto NVA, and Terragrunt."
+description: "How I built an enterprise Azure Landing Zone from scratch with 60+ custom Terraform modules aligned with Azure Verified Modules patterns, Palo Alto NVA, and Terragrunt."
 date: 2026-04-15T00:00:00Z
 image: "/images/blog/azure-landing-zone.png"
 categories: ["Landing Zone"]
@@ -20,7 +20,7 @@ Three reasons forced my hand:
 - **Azure Policy Deny on subnets without NSG** — The standard `azurerm_subnet` + `azurerm_subnet_network_security_group_association` two-step approach is blocked by policy. I had to use `azapi_resource` to create subnet + NSG atomically in a single ARM API call.
 - **AVM modules are massive** — The AVM AKS module alone has hundreds of variables. For a Landing Zone where you control the entire stack, custom modules with opinionated defaults (private by default, RBAC by default, purge protection by default) are faster to deploy and easier to maintain.
 
-So I took the **patterns** from AVM — not the modules themselves — and built 35 focused modules tailored to our architecture.
+So I took the **patterns** from AVM — not the modules themselves — and built 60+ focused modules tailored to our architecture.
 
 ## The Architecture
 
@@ -107,7 +107,7 @@ The official Palo Alto module enables accelerated networking on all dataplane in
 
 ## AVM Patterns That Actually Matter
 
-After aligning all 35 modules with Azure Verified Modules patterns, here are the ones that made a real difference:
+After aligning all 60+ modules with Azure Verified Modules patterns, here are the ones that made a real difference:
 
 ### map(object) instead of list(object)
 
@@ -168,7 +168,7 @@ ALZ deploys a DINE policy that automatically creates a DNS zone group on every P
 
 ## The Result
 
-35 modules. Zero public endpoints. Dual environment. Every module validated with regex on naming vars, `nullable = false` on required inputs, `output "resource"` for the complete object. Reviewed by two independent experts (Azure Architect + Palo Alto Security Architect) — all critical and high findings resolved.
+60+ modules. Zero public endpoints. Dual environment. Every module validated with regex on naming vars, `nullable = false` on required inputs, `output "resource"` for the complete object. Reviewed by two independent experts (Azure Architect + Palo Alto Security Architect) — all critical and high findings resolved.
 
 The full module library is open source:
 
