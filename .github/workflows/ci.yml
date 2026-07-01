@@ -46,6 +46,12 @@ jobs:
       - name: Build
         run: pnpm build
 
+      # Fail if Astro's inline runtime scripts no longer match the SHA-256
+      # hashes pinned in public/_headers script-src (e.g. after an Astro bump),
+      # which would otherwise let the CSP silently break island hydration.
+      - name: Verify CSP script-src hashes
+        run: pnpm run check-csp
+
       - name: Upload build artifact
         uses: actions/upload-artifact@v7
         with:
