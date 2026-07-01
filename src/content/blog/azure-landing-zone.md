@@ -150,7 +150,7 @@ Every resource that would cause significant damage if accidentally destroyed get
 - Key Vaults (secrets, CMK keys)
 - AKS clusters (workloads, persistent volumes — hours to recreate)
 - Container Registry (all container images)
-- DDoS Protection Plan (~€2,944/month)
+- DDoS Protection Plan (~$2,944/month)
 - Storage Accounts (state files, backups, FinOps data)
 - Palo Alto VMs + their KV + encryption keys
 
