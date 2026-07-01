@@ -12,6 +12,7 @@
     "preview": "astro preview",
     "check": "astro check",
     "format": "prettier -w ./src",
+    "check-csp": "node scripts/checkCspHashes.mjs",
     "generate-json": "node scripts/jsonGenerator.js",
     "generate-llms": "node scripts/llmsGenerator.js",
     "remove-darkmode": "node scripts/removeDarkmode.js && pnpm format",

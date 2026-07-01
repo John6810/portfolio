@@ -10,11 +10,17 @@
   Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=(), usb=()
   Cross-Origin-Opener-Policy: same-origin
   X-DNS-Prefetch-Control: off
-  # Permissive-but-real CSP. Astroplate self-hosts fonts (Astro Font API) and
-  # hydrates React islands from /_astro (script-src 'self'); 'unsafe-inline' is
-  # needed for Astro's inline hydration + view-transition scripts and inline
-  # styles. Tighten later with hashes/nonces if desired.
-  Content-Security-Policy: default-src 'self'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'; object-src 'none'; img-src 'self' data:; font-src 'self' https://fonts.gstatic.com data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'unsafe-inline'; connect-src 'self'; manifest-src 'self'; frame-src 'none'
+  # CSP. React islands load as external modules from /_astro (script-src 'self').
+  # Astro also emits 3 tiny INLINE runtime scripts (the astro-island custom
+  # element + Astro.load/Astro.only); instead of 'unsafe-inline' we pin their
+  # exact SHA-256 hashes below, so script-src carries NO 'unsafe-inline'.
+  # These hashes are Astro-version-specific — scripts/checkCspHashes.mjs runs in
+  # CI after the build and fails if the built inline scripts no longer match, so
+  # an Astro bump can't silently break island hydration in production.
+  # style-src keeps 'unsafe-inline': Shiki emits per-token inline style="…"
+  # attributes on code blocks (can't be hashed without 'unsafe-hashes'), and
+  # securityheaders only flags 'unsafe-inline' in script-src, not style-src.
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'; object-src 'none'; img-src 'self' data:; font-src 'self' https://fonts.gstatic.com data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'sha256-eIXWvAmxkr251LJZkjniEK5LcPF3NkapbJepohwYRIc=' 'sha256-SaCkFfPruIdTXT8/97JArQmGxiJAL2o4bBDvSgJ5y3Q=' 'sha256-QzWFZi+FLIx23tnm9SBU4aEgx4x8DsuASP07mfqol/c='; connect-src 'self'; manifest-src 'self'; frame-src 'none'
 
 # ── Fingerprinted build output — cache hard (immutable) ──
 /_astro/*
